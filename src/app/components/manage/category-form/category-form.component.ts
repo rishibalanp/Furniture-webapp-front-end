@@ -3,12 +3,12 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { CategoryService } from '../../../services/category.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
 	selector: 'app-category-form',
 	standalone: true,
-	imports: [FormsModule,MatInputModule,MatButtonModule], 
+	imports: [FormsModule,MatInputModule,MatButtonModule,RouterLink], 
 	templateUrl: './category-form.component.html',
 	styleUrl: './category-form.component.scss'
 })

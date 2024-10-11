@@ -17,7 +17,7 @@
 					<input matInput type="text" [(ngModel)]="name" name="name">
 				</mat-form-field>
 			</div>
-			<div class="w-full flex justify-center">
+			<div class="flex justify-evenly gap-4">
 				@if(isEdit){
 					<button mat-raised-button color="primary" (click)="updateCategory()">
 						Update Category 
@@ -27,6 +27,8 @@
 						Add Category 
 					</button>
 				}
+
+				<button mat-raised-button color="primary" routerLink="/admin/categories">Cancel</button>
 
 			</div>
 		</div>

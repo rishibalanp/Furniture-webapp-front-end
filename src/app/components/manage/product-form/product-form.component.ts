@@ -7,10 +7,11 @@ import { category } from '../../../types/category';
 import { CategoryService } from '../../../services/category.service';
 import { ProductService } from '../../../services/product.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 @Component({
 	selector: 'app-product-form',
 	standalone: true,
-	imports: [ReactiveFormsModule,MatInputModule,MatButtonModule,MatSelectModule,RouterLink],
+	imports: [ReactiveFormsModule,MatInputModule,MatButtonModule,MatSelectModule,RouterLink,MatCheckboxModule],
 	templateUrl: './product-form.component.html',
 	styleUrl: './product-form.component.scss'
 })
@@ -24,7 +25,9 @@ productForm = this.formBuilder.group({
 	description: [null, [Validators.required,Validators.minLength(20)]],
 	shortDescription: [null, [Validators.required,Validators.minLength(10)]],
 	images: this.formBuilder.array([]),
-	categoryId:[null,Validators.required]
+	categoryId:[null,Validators.required],
+	isFeatured:[false],
+	isNewProduct:[false]
 });
 
 categories: category[] = [];

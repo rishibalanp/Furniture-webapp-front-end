@@ -1,2 +1,19 @@
-<p>home works!</p>
-<button mat-raised-button color="primary" routerLink="/admin/categories">category</button>
+  <div>
+    <h4 class="featured-product my-20">
+        Featured Product
+    </h4>
+    <div>
+        <div class="featured-div">
+            @for(item of featuredProduct; track $index){
+                <div class="product-card">
+                    <img src="https://via.placeholder.com/300x200" alt="Product Image" />
+                    <div class="product-info">
+                      <h3>Product Title</h3>
+                      <p class="price">$49.99</p>
+                      <a href="#" class="btn">Add to Cart</a>
+                    </div>
+                  </div>
+            }  
+        </div>
+    </div>
+  </div>
