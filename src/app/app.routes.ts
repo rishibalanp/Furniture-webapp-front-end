@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { CategoriesComponent } from './components/manage/categories/categories.component';
 import { CategoryFormComponent } from './components/manage/category-form/category-form.component';
+import { ProductComponent } from './components/manage/product/product.component';
+import { ProductFormComponent } from './components/manage/product-form/product-form.component';
 
 export const routes: Routes = [
 	{
@@ -19,5 +21,17 @@ export const routes: Routes = [
 	{
 		path:"admin/categories/:id",
 		component: CategoryFormComponent
+	},
+	{
+		path:"admin/product",
+		component: ProductComponent
+	},
+	{
+		path:"admin/product/add",
+		component: ProductFormComponent
+	},
+	{
+		path:"admin/product/:id",						
+		component: ProductFormComponent
 	},
 ];
