@@ -1,0 +1,76 @@
+<div class="background">
+	<div class="form-container">
+		<div class="form-box">
+			<h2>Sign up</h2>
+			<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+				<div class="input-box form-group">
+					<input type="text" formControlName="name" required 
+					class="form-control"
+				[ngClass]="{ 'is-invalid': submitted && f['name'].errors }"
+					/>
+					<label>Name</label>
+						@if (submitted && f['name'].errors) {
+							<div class="invalid-feedback">
+								@if (f['name'].errors['required']) {
+								<div>Name is required</div>
+								}
+                @if (f['name'].errors['maxlength']) {
+                  <div>Name must not exceed 20 characters</div>
+                  }
+							</div>
+							}
+				</div>
+				<div class="input-box form-group">
+					<input type="text" formControlName="email" required 
+						class="form-control"
+						[ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
+						/>
+					<label>Email</label>
+						@if (submitted && f['email'].errors) {
+							<div class="invalid-feedback">
+								@if (f['email'].errors['required']) {
+								<div>Email is required</div>
+								} @if (f['email'].errors['email']) {
+								<div>Email is invalid</div>
+								}
+							</div>
+							}
+				</div>
+				<div class="input-box form-group">
+					<input type="password" formControlName="password" required 
+						class="form-control"
+						[ngClass]="{ 'is-invalid': submitted && f['password'].errors }"
+						/>
+					<label>Password</label>
+						@if (submitted && f['password'].errors) {
+							<div class="invalid-feedback">
+								@if (f['password'].errors['required']) {
+								<div>Password is required</div>
+								} @if (f['password'].errors['minlength']) {
+								<div>Password must be at least 6 characters</div>
+								} @if (f['password'].errors['maxlength']) {
+								<div>Password must not exceed 40 characters</div>
+								}
+							</div>
+							}
+				</div>
+				<div class="input-box form-group">
+					<input type="password" formControlName="confirmPassword" required 
+						class="form-control"
+						[ngClass]="{ 'is-invalid': submitted && f['confirmPassword'].errors }"/>
+					<label>Confirm Password</label>
+						@if (submitted && f['confirmPassword'].errors) {
+							<div class="invalid-feedback">
+								@if (f['confirmPassword'].errors['required']) {
+								<div>Confirm Password is required</div>
+								} @if (f['confirmPassword'].errors['matching']) {
+								<div>Confirm Password does not match</div>
+								}
+							</div>
+							}
+				</div>
+				<button type="submit" mat-raised-button>Register</button>
+			</form>
+		</div>
+	</div>
+</div>

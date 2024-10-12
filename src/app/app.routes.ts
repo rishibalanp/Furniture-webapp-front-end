@@ -6,42 +6,74 @@ import { ProductComponent } from './components/manage/product/product.component'
 import { ProductFormComponent } from './components/manage/product-form/product-form.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
+import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './components/login/login.component';
+import { authGuard } from './core/auth-guard';
+import { AdminComponent } from './components/manage/admin/admin.component';
+import { adminGuard } from './core/admin-guard';
+import { ProfileComponent } from './components/profile/profile.component';
 
 export const routes: Routes = [
 	{
 		path:"",
-		component: HomeComponent
+		component: HomeComponent,
+		canActivate:[authGuard]
+	},
+	{
+		path:"admin",
+		component:AdminComponent,
+		canActivate:[adminGuard]
+
 	},
 	{
 		path:"admin/categories",
-		component: CategoriesComponent
+		component: CategoriesComponent,
+		canActivate:[adminGuard]
 	},
 	{
 		path:"admin/categories/add",
-		component: CategoryFormComponent
+		component: CategoryFormComponent,
+		canActivate:[adminGuard]
 	},
 	{
 		path:"admin/categories/:id",
-		component: CategoryFormComponent
+		component: CategoryFormComponent,
+		canActivate:[adminGuard]
 	},
 	{
 		path:"admin/product",
-		component: ProductComponent
+		component: ProductComponent,
+		canActivate:[adminGuard]
 	},
 	{
 		path:"admin/product/add",
-		component: ProductFormComponent
+		component: ProductFormComponent,
+		canActivate:[adminGuard]
 	},
 	{
 		path:"admin/product/:id",						
-		component: ProductFormComponent
+		component: ProductFormComponent,
+		canActivate:[adminGuard]
 	},
 	{
 		path: "product",
-		component: ProductListComponent
+		component: ProductListComponent,
+		canActivate:[authGuard]
 	},
 	{
 		path: "product/:id",
-		component: ProductDetailComponent
+		component: ProductDetailComponent,
+		canActivate:[authGuard]
+	},
+	{
+		path: "profile",
+		component: ProfileComponent,
+		canActivate:[authGuard]
+	},{
+		path: "register",
+		component: RegisterComponent
+	},{
+		path: "login",
+		component:LoginComponent
 	}
 ];

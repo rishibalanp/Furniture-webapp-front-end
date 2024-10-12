@@ -1,23 +1,29 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { CategoryService } from '../../services/category.service';
 import { category } from '../../types/category';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { CommonModule } from '@angular/common';
+import { CustomerService } from '../../services/customer.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
 	selector: 'app-header',
 	standalone: true,
-	imports: [RouterLink],
+	imports: [RouterLink,CommonModule, MatMenuModule, MatIconModule, MatButtonModule],
 	templateUrl: './header.component.html',
 	styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit {
 
-categoryService = inject(CategoryService);
+customerService = inject(CustomerService);
 categoryList: category[]=[];
-router = inject(Router)
+router = inject(Router);
+authService = inject(AuthService);
 
 ngOnInit(): void {
-    this.categoryService.getCategory().subscribe(res =>{
+    this.customerService.getCategory().subscribe(res =>{
 	    this.categoryList = res;
     })
 }
@@ -36,5 +42,12 @@ searchCategory(id:string){
 searchCategoryByIcon(id:string){
   this.router.navigateByUrl("/product?categoryId="+id);
 }
+onProfile() {
+  this.router.navigateByUrl("/profile");
+}
 
+onLogout() {
+  this.authService.logout();
+  this.router.navigateByUrl("/login");
+}
 }

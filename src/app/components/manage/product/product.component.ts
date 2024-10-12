@@ -8,7 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { ProductService } from '../../../services/product.service';
 import { Product } from '../../../types/product';
-
+import Swal from 'sweetalert2';
+import { TYPE } from './../../../types/alert';
 
 @Component({
 	selector: 'app-product',
@@ -59,7 +60,15 @@ export class ProductComponent {
 	}
 	delete(id:any){
 this.productService.deleteProduct(id).subscribe((res)=>{
-	alert("Product deleted successfully");
+	Swal.fire({
+		toast: true,
+		position: 'top',
+		showConfirmButton: false,
+		icon: TYPE.SUCCESS,
+		timer: 4000,
+		showCloseButton:true,
+		title: 'Deleted successfully'
+	  });
 	this.getAllProduct();
 })
 	}

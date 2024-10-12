@@ -8,6 +8,9 @@ import { CategoryService } from '../../../services/category.service';
 import { ProductService } from '../../../services/product.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import Swal from 'sweetalert2';
+import { TYPE } from './../../../types/alert';
+
 @Component({
 	selector: 'app-product-form',
 	standalone: true,
@@ -59,7 +62,15 @@ addProduct(){
 	let value = this.productForm.value;
 	console.log(this.productForm.value);
 	this.productService.addProduct(value as any).subscribe(result=>{
-		alert("product added successfully");
+		Swal.fire({
+			toast: true,
+			position: 'top',
+			showConfirmButton: false,
+			icon: TYPE.SUCCESS,
+			timer: 4000,
+			showCloseButton:true,
+			title: 'Added successfully'
+		  });
 		this.router.navigateByUrl("/admin/product")
 	});
 }
@@ -67,7 +78,15 @@ addProduct(){
 updateProduct(){
 	let value = this.productForm.value;
 	this.productService.updateProduct(this.id,value as any).subscribe(result=>{
-		alert("product updated successfully");
+		Swal.fire({
+			toast: true,
+			position: 'top',
+			showConfirmButton: false,
+			icon: TYPE.SUCCESS,
+			timer: 4000,
+			showCloseButton:true,
+			title: 'Updated successfully'
+		  });
 		this.router.navigateByUrl("/admin/product")
 	})
 }

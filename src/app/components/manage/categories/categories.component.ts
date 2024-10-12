@@ -8,6 +8,9 @@ import { CategoryService } from '../../../services/category.service';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { category } from '../../../types/category';
+import Swal from 'sweetalert2';
+import { TYPE } from './../../../types/alert';
+
 
 @Component({
 	selector: 'app-categories',
@@ -58,7 +61,15 @@ export class CategoriesComponent implements AfterViewInit,OnInit{
 	}
 	delete(id:any){
 this.categoryService.deleteCategory(id).subscribe((res)=>{
-	alert("category deleted successfully");
+	Swal.fire({
+		toast: true,
+		position: 'top',
+		showConfirmButton: false,
+		icon: TYPE.SUCCESS,
+		timer: 4000,
+		showCloseButton:true,
+		title: 'Deleted successfully'
+	  });
 	this.getAllCategory();
 })
 	}

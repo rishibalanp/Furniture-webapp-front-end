@@ -4,6 +4,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { CategoryService } from '../../../services/category.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import Swal from 'sweetalert2';
+import { TYPE } from './../../../types/alert';
 
 @Component({
 	selector: 'app-category-form',
@@ -34,17 +36,41 @@ export class CategoryFormComponent implements OnInit {
 	addCategory(){
 		if(this.name){
 			this.categoryService.addCategory(this.name).subscribe((res:any)=>{
-				alert("category added successfully");
+				Swal.fire({
+					toast: true,
+					position: 'top',
+					showConfirmButton: false,
+					icon: TYPE.SUCCESS,
+					timer: 4000,
+					showCloseButton:true,
+					title: 'Added successfully'
+				  });
 				this.router.navigateByUrl('/admin/categories');
 			}) 
 		}else{
-			alert("Please enter category name");
+			Swal.fire({
+				toast: true,
+				position: 'top',
+				showConfirmButton: false,
+				icon: TYPE.WARNING,
+				timer: 4000,
+				showCloseButton:true,
+				title: 'Enter category name'
+			  });
 		}
 
 	} 
   updateCategory(){
     this.categoryService.updateCategory(this.id,this.name).subscribe((res:any)=>{
-      alert("category updated successfully");
+		Swal.fire({
+			toast: true,
+			position: 'top',
+			showConfirmButton: false,
+			icon: TYPE.SUCCESS,
+			timer: 4000,
+			showCloseButton:true,
+			title: 'Updated successfully'
+		  });
       this.router.navigateByUrl('/admin/categories');
     }) 
   }

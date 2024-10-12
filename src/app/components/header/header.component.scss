@@ -7,8 +7,8 @@ $text-color: #fff;
 $link-hover-color: #d4d4d8;
 
 .header {
-	background: linear-gradient(45deg, $primary-color, $secondary-color);
-	padding: 1rem 1rem 0.25rem 1rem;
+	background: linear-gradient(45deg, $secondary-color, $secondary-color);
+	padding: 1rem 1rem 0.5rem 1rem;
 
 	.logo {
 		&__text {
@@ -53,7 +53,7 @@ $link-hover-color: #d4d4d8;
 			background-color: $input-bg;
 			font-size: 1rem;
 			transition: box-shadow 0.3s ease;
-            // font-family: "Kanit", sans-serif;
+				// font-family: "Kanit", sans-serif;
 
 			&:focus {
 				outline: none;
@@ -67,7 +67,7 @@ $link-hover-color: #d4d4d8;
 			top: 0;
 			bottom: 0;
 			padding: 0 1rem;
-			background-color: $primary-color;
+			background-color: $secondary-color;
 			border: none;
 			border-radius: 50px;
 			display: flex;
@@ -127,8 +127,8 @@ nav {
 		font-size: 1rem; 
 		color: white; 
 		cursor: pointer; 
-        // font-family: "Kanit", sans-serif;		
-        font-weight: 500;
+			// font-family: "Kanit", sans-serif; 
+			font-weight: 500;
 		font-style: normal;
 		text-transform:uppercase;
 		transition: color 0.3s; 
@@ -136,5 +136,22 @@ nav {
 		&:hover {
 			color: $secondary-color; 
 		}
+	}
+
+
+	.user-icon{
+		display: contents;
+	}
+	.user-name{
+		font-size: 0.75rem;
+			text-transform: uppercase;
+			color: white;
+	}
+
+	.log-register{
+		font-size: 0.75rem;
+			text-transform: uppercase;
+			color: white;
+			margin-right: 1.5rem;
 	}
 

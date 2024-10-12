@@ -1,0 +1,41 @@
+<div class="background">
+	<div class="form-container">
+		<div class="form-box">
+			<h2>Sign in</h2>
+			<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+				<div class="input-box form-group">
+					<input type="text" formControlName="email" required 
+						class="form-control"
+						[ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
+						/>
+					<label>Email</label>
+						@if (submitted && f['email'].errors) {
+							<div class="invalid-feedback">
+								@if (f['email'].errors['required']) {
+								<div>Email is required</div>
+								} @if (f['email'].errors['email']) {
+								<div>Email is invalid</div>
+								}
+							</div>
+							}
+				</div>
+				<div class="input-box form-group">
+					<input type="password" formControlName="password" required 
+						class="form-control"
+						[ngClass]="{ 'is-invalid': submitted && f['password'].errors }"
+						/>
+					<label>Password</label>
+						@if (submitted && f['password'].errors) {
+							<div class="invalid-feedback">
+								@if (f['password'].errors['required']) {
+								<div>Password is required</div>
+								}
+							</div>
+							}
+				</div>
+				<button type="submit" mat-raised-button>Login</button>
+			</form>
+		</div>
+	</div>
+</div>
