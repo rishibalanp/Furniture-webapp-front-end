@@ -5,7 +5,7 @@
 		</div>
 		<div class="search-bar">
 			<div class="relative">
-				<input type="text" placeholder="Search for products..." class="search-bar__input">
+				<input type="text" placeholder="Search for products..." class="search-bar__input" (keyup.enter)="searchProduct($event)">
 				<button class="search-bar__button">
                     <i class="fa fa-search"></i>
 				</button>
@@ -15,7 +15,7 @@
                 <nav>
                     <ul class="flex">
                         @for( category of categoryList; track $index){
-                            <li>{{category.name}}</li>
+                            <li (click)="searchCategory(category._id)">{{category.name}}</li>
                         }
                     </ul>
         

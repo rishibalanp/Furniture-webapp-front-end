@@ -1,33 +1,49 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { CustomerService } from '../../services/customer.service';
 import { Product } from '../../types/product';
-
+import { ProductCardComponent } from '../product-card/product-card.component';
+import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 @Component({
 	selector: 'app-home',
 	standalone: true,
-	imports: [RouterLink,MatButtonModule],
+	imports: [RouterLink,ProductCardComponent,CarouselModule,RouterLink],
 	templateUrl: './home.component.html',
 	styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit{
+  customOptions: OwlOptions = {
+    loop: true,
+    mouseDrag: false,
+    touchDrag: false,
+    pullDrag: false,
+    dots: false,
+    autoplay: true, 
+    autoplayTimeout: 3000,  
+    navSpeed: 700,
+    navText: ['', ''],
+    nav: true
+  }
 
-
-	customerService = inject(CustomerService);
+customerService = inject(CustomerService);
 newProducts: Product[]=[];
-featuredProduct: Product[]=[];
+featuredProducts: Product[]=[];
+bannerImages: Product[]=[];
 
 
 ngOnInit(): void {
   this.customerService.getNewProduct().subscribe(res=>{
-    this.newProducts=res;
-    console.log(this.newProducts);
-  })
+    this.newProducts=res.slice(0, 4);;
+    console.log(res,'new');
+    this.bannerImages.push(...res);
+    console.log(this.bannerImages,'new');
+  });
   this.customerService.getFeaturedProducts().subscribe(res=>{
-    this.featuredProduct=res;
-    console.log(this.featuredProduct);
-  })
+    this.featuredProducts=res.slice(0, 4);;
+    console.log(res,'fes');
+    this.bannerImages.push(...res);
+    console.log(this.bannerImages,'new');
+  });
 }
 
 } 

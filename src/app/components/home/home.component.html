@@ -1,19 +1,35 @@
-  <div>
-    <h4 class="featured-product my-20">
-        Featured Product
-    </h4>
-    <div>
-        <div class="featured-div">
-            @for(item of featuredProduct; track $index){
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300x200" alt="Product Image" />
-                    <div class="product-info">
-                      <h3>Product Title</h3>
-                      <p class="price">$49.99</p>
-                      <a href="#" class="btn">Add to Cart</a>
-                    </div>
+<div>
+    <div class="shadow carouselSlideStyles">
+        <owl-carousel-o [options]="customOptions">
+            @for(  image of bannerImages; track $index){
+                <ng-template carouselSlide>
+                  <div class="relative flex flex-col items-center" [routerLink]="'product/'+image._id">
+                        <img [src]="image.images[0]" alt="image">
+                        <span>{{image.name}}</span>
                   </div>
-            }  
-        </div>
+                </ng-template>  
+            }
+          </owl-carousel-o>
     </div>
-  </div>
+
+	<h4 class="featured-product my-20">
+		Featured Product
+	</h4>
+	<div class="featured">
+		<div class="featured-div">
+			@for(product of featuredProducts; track $index){
+				<app-product-card [product]="product"> </app-product-card>
+			} 
+		</div>
+	</div>
+	<h4 class="featured-product my-20">
+		New Product
+	</h4>
+	<div class="featured">
+		<div class="featured-div">
+			@for(product of newProducts; track $index){
+				<app-product-card [product]="product"></app-product-card>
+			} 
+		</div>
+	</div>
+</div>

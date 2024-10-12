@@ -1,0 +1,11 @@
+<div class="product-card" [routerLink]="'product/'+product._id">
+    <img [src]="product.images[0]" alt="Product Image" />
+    <div class="product-info">
+      <h3>{{product.name}}</h3>
+      <p>{{product.shortDescription}}</p>
+      <p class="price">₹{{product.price}}</p>
+      <button mat-raised-button class="addtocart">
+        Add to cart
+      </button>
+    </div>
+  </div>
