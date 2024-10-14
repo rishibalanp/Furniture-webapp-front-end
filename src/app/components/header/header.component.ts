@@ -7,11 +7,12 @@ import { CustomerService } from '../../services/customer.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
+import { FormsModule } from '@angular/forms';
 
 @Component({
 	selector: 'app-header',
 	standalone: true,
-	imports: [RouterLink,CommonModule, MatMenuModule, MatIconModule, MatButtonModule],
+	imports: [RouterLink,CommonModule, MatMenuModule, MatIconModule, MatButtonModule,FormsModule],
 	templateUrl: './header.component.html',
 	styleUrl: './header.component.scss'
 })
@@ -21,6 +22,7 @@ customerService = inject(CustomerService);
 categoryList: category[]=[];
 router = inject(Router);
 authService = inject(AuthService);
+searchTerm!:string
 
 ngOnInit(): void {
     this.customerService.getCategory().subscribe(res =>{
@@ -36,12 +38,10 @@ searchProduct(event:any){
 }
 
 searchCategory(id:string){
+  this.searchTerm = "";
   this.router.navigateByUrl("/product?categoryId="+id);
 }
 
-searchCategoryByIcon(id:string){
-  this.router.navigateByUrl("/product?categoryId="+id);
-}
 onProfile() {
   this.router.navigateByUrl("/profile");
 }

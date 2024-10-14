@@ -1,29 +1,15 @@
 <header class="header">
 	<div class="container mx-auto flex items-center justify-between">
 		<div class="logo">
-			<a class="logo__text" routerLink=""><b>Hakshara</b>Furniture</a>
+			<a class="logo__text" routerLink=""><b>Hakshara</b></a>
 		</div>
 		<div class="search-bar">
 			<div class="relative">
-				<input type="text" placeholder="Search for products..." class="search-bar__input" (keyup.enter)="searchProduct($event)">
+				<input type="text" placeholder="Search for products..." [(ngModel)]="searchTerm" class="search-bar__input" (keyup.enter)="searchProduct($event)">
 				<button class="search-bar__button">
 					<i class="fa fa-search"></i>
 				</button>
 			</div>
-
-            @if(authService.isLoggedIn){
-				<div class="mt-4">
-					<nav>
-						<ul class="flex">
-							@for( category of categoryList; track $index){
-								<li (click)="searchCategory(category._id)">{{category.name}}</li>
-							}
-						</ul>
-
-					</nav>
-				</div>
-            }
-
 		</div>
 
 		<div class="header__links" *ngIf="authService.isLoggedIn">
@@ -52,5 +38,21 @@
         </div>
 	</div>
 	</header>
+
+    <div class="nav-header shadow-md ">
+        
+            @if(authService.isLoggedIn){
+				<div class="mt-1">
+					<nav>
+						<ul class="flex">
+							@for( category of categoryList; track $index){
+								<li (click)="searchCategory(category._id)">{{category.name}}</li>
+							}
+						</ul>
+
+					</nav>
+				</div>
+            }
+    </div>
 
 

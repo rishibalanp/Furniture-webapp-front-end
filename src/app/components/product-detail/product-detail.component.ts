@@ -9,4 +9,11 @@ import { Component } from '@angular/core';
 })
 export class ProductDetailComponent {
 
+  addToCart() {
+    alert('Added to Cart');
+  }
+
+  buyNow() {
+    alert('Proceeding to Buy');
+  }
 }
