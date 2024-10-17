@@ -8,6 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
+import { of,interval } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-header',
@@ -18,36 +20,59 @@ import { FormsModule } from '@angular/forms';
 })
 export class HeaderComponent implements OnInit {
 
+
 customerService = inject(CustomerService);
 categoryList: category[]=[];
 router = inject(Router);
 authService = inject(AuthService);
-searchTerm!:string
+searchTerm!:string;
 
 ngOnInit(): void {
-    this.customerService.getCategory().subscribe(res =>{
-	    this.categoryList = res;
-    })
+	interval(300).pipe(
+		switchMap(() => {
+		  if (this.authService.isLoggedIn) {
+			// Check if the user is logged in and the categoryList is empty
+			if (this.categoryList.length === 0) {
+			  // Make the service call to get categories
+			  return this.customerService.getCategory();
+			}
+		  }
+		  // If conditions are not met, return an empty observable
+		  return of([]);
+		})
+	  ).subscribe(
+		res => {
+		  if (res && res.length > 0) {
+			this.categoryList = res;
+		  }
+		},
+		error => {
+		  if (error.status === 401) {
+			console.error('Unauthorized access');
+		  }
+		}
+	  );
 }
 
 searchProduct(event:any){
-  console.log(event.target.value);
-  if(event.target.value){
-    this.router.navigateByUrl("/product?search="+event.target.value);
-  }
+	console.log(event.target.value);
+	if(event.target.value){
+		this.router.navigateByUrl("/product?search="+event.target.value);
+	}
 }
 
 searchCategory(id:string){
-  this.searchTerm = "";
-  this.router.navigateByUrl("/product?categoryId="+id);
+	this.searchTerm = "";
+	this.router.navigateByUrl("/product?categoryId="+id);
 }
 
 onProfile() {
-  this.router.navigateByUrl("/profile");
+	this.router.navigateByUrl("/profile");
 }
 
 onLogout() {
-  this.authService.logout();
-  this.router.navigateByUrl("/login");
+	this.authService.logout();
+	this.router.navigateByUrl("/login");
 }
+
 }

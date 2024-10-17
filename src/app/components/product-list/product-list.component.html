@@ -1,1 +1,43 @@
-<p>product-list works!</p>
+<div class="flex px-10 py-2 product-list">
+    <div class="w-2/12 filter">
+        <div class="filter-header">
+            <h5>Filters</h5>
+        </div>
+        <hr>
+
+        <div >
+            <mat-form-field class="w-full p-2">
+                <mat-label>Select Category</mat-label>
+                <mat-select name="categoryId" [(ngModel)]="categoryId" (valueChange)="getProducts()">
+                    @for(categories of category; track $index){
+                        <mat-option [value]="categories._id">{{categories.name}}</mat-option>
+                    }
+                </mat-select>
+              </mat-form-field>
+        </div>
+
+    </div>
+    <div class="flex-1 product">
+        <div class="flex justify-end">
+            <mat-form-field class="w-40">
+                <mat-label>Sort by price:</mat-label>
+                <mat-select (valueChange)="orderChange($event)">
+                        <mat-option [value]="1">Low to High</mat-option>
+                        <mat-option [value]="-1">High to Low</mat-option>
+                </mat-select>
+              </mat-form-field>
+        </div>
+       
+         <div class="w-full">
+            @for(product of products; track $index){
+                <app-product-card-list [product]="product"></app-product-card-list>
+            }@empty {
+                <h5 class="no-products">No products</h5>
+            }
+        </div>
+        <div class="flex justify-center m-4">
+            <button mat-raised-button class="m-2" [disabled]="page==1" (click)="pageChange(page-1)">Previous</button>
+            <button mat-raised-button class="m-2" (click)="pageChange(page+1)">Next</button>
+        </div>
+    </div>
+</div>
