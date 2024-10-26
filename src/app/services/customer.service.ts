@@ -12,15 +12,15 @@ export class CustomerService {
 	http = inject(HttpClient)
 		constructor() { }
 
-		getNewProduct(){
+getNewProduct(){
 			return this.http.get<Product[]>(environment.apiUrl+'/customer/new-products')
-		}
+}
 
-		getFeaturedProducts(){
+getFeaturedProducts(){
 			return this.http.get<Product[]>(environment.apiUrl+'/customer/featured-products')
-	}
+}
 
-	getCategory(){
+getCategory(){
 		return this.http.get<category[]>(environment.apiUrl+'/customer/categories')
 }
 

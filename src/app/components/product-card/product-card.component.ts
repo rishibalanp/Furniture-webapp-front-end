@@ -12,4 +12,7 @@ import { RouterLink } from '@angular/router';
 })
 export class ProductCardComponent {
 @Input() product!:Product;
+get sellingPrice() {
+  return Math.floor(this.product.price - (this.product.price * this.product.discount / 100));
+}
 }

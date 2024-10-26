@@ -1,47 +1,73 @@
-  <div class="max-w-7xl mx-auto p-6 bg-white mt-5 productdeatil shadow-md">
-    <div class="flex flex-col md:flex-row">
-      <div class="w-full md:w-1/3">
-        <div class="space-y-2">
-            <div>
-                <img [src]="product.images[0]" alt="Product thumbnail" class="rounded-lg w-full" />
-            </div>
-          <div class="flex space-x-2">
-            @for(item of product.images; track $index){
-              <img [src]="item" alt="thumbnail" class="w-16 h-16 object-cover rounded-md" />
-            }
-          </div>
-        </div>
-      </div>
-  
-      <!-- Right Side: Product Information -->
-      <div class="w-full md:w-2/3 md:pl-8 h-auto">
-        <h1 class="productdetail-name">{{product?.name}}</h1>
-        <p class="text-green-600 font-semibold mb-1">4.6 ★ | 1,61,542 Ratings & 5,245 Reviews</p>
-        <p class="text-lg mb-4">{{product?.shortDescription}}</p>
-        <div class="text-3xl font-bold mb-2 text-gray-800">₹57,999 <span class="line-through text-gray-500">₹69,900</span> <span class="text-green-600">17% off</span></div>
-        
-       
-  
-        <!-- Purchase Options -->
-        <div class="flex items-center space-x-4 button-div">
-          <button class="bg-yellow-400 text-white py-2 px-4 rounded-md shadow-md hover:bg-yellow-500">
-            ADD TO CART
-          </button>
-          <button class="bg-orange-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-orange-600">
-            BUY NOW
-          </button>
-        </div>
+<div>
+	<div class="max-w-7xl mx-auto p-6 bg-white mt-5 productdeatil ">
+		<div class="flex flex-col md:flex-row">
+			<div class="w-full md:w-1/3">
+				<div class="space-y-2">
+					<div>
+						<img [src]="mainImage" alt="Product thumbnail" class="rounded-lg w-full h-96 shadow" />
+					</div>
+					<div class="flex space-x-2">
+						@for(item of product.images; track $index){
+							<img [src]="item" alt="thumbnail" class="w-16 h-16 object-cover rounded-md cursor-pointer" (click)="changeImage(item)" />
+						}
+					</div>
+				</div>
+			</div>
+	
+			<!-- Right Side: Product Information -->
+			<div class="w-full md:w-2/3 md:pl-8 h-auto">
+				<h1 class="productdetail-name">{{product?.name}}</h1>
+				<p class="text-green-600 font-semibold mb-1">4.6 ★ | 1,61,542 Ratings & 5,245 Reviews</p>
+				<p class="text-lg mb-4">{{product?.shortDescription}}</p>
+				<div class="text-3xl font-bold mb-2 text-gray-800">₹{{sellingPrice}} <span class="line-through text-gray-500"><s>₹{{product.price}}</s></span> <span class="text-green-600 px-4">{{product.discount}}% off</span></div>
+	
+	
+	
+				<!-- Purchase Options -->
+				<div class="flex items-center space-x-4 button-div">
+					<button class="bg-yellow-400 text-white py-2 px-4 rounded-md shadow-md hover:bg-yellow-500 mat-flat-button">
+						ADD TO CART
+					</button>
+					<button class="bg-orange-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-orange-600 mat-flat-button">
+						BUY NOW
+					</button>
+				</div>
+	
+					<!-- Offers -->
+					<div class=" border-gray border-b py-4 mb-4 pt-4">
+						<p class="font-semibold text-gray-700">Product Description</p>
+						<div>
+							<pre class="pre-tag">{{product?.description}} </pre>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	@if(similarProducts.length){
+		<h4 class="featured-product my-20">
+			Similar Product
+		</h4>
+		<div class="featured">
+			<div class="featured-div justify-center">
+				@for(product of similarProducts; track $index){
+					<app-product-card [product]="product"></app-product-card>
+				} 
+			</div>
+		</div>
+	}
+	
+	
+	<div class="max-w-7xl mx-auto p-6 bg-white mt-5 productdeatil ">
+		<div class="flex flex-col md:flex-row"></div>
+	  <div class="border-gray py-4 mb-4 pt-4">
+		<p class="font-semibold text-gray-700">Product Details</p>
+		<div>
+		  <pre class="pre-tag">{{product?.description}} </pre>
+		</div>
+	  </div>
+	</div>
+	
+	
+</div>
 
-         <!-- Offers -->
-         <div class="border-t border-gray border-b py-4 mb-4 pt-4">
-          <p class="font-semibold text-gray-700">Product Description</p>
-          <div>
-            <pre class="pre-tag">{{product?.description}} </pre>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  

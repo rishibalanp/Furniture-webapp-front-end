@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { category } from '../../types/category';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -8,8 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
-import { of,interval } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { of,interval,Subject } from 'rxjs';
+import { switchMap, catchError, retry, takeUntil } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-header',
@@ -18,9 +18,9 @@ import { switchMap } from 'rxjs/operators';
 	templateUrl: './header.component.html',
 	styleUrl: './header.component.scss'
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit,OnDestroy{
 
-
+private destroy$ = new Subject<void>();
 customerService = inject(CustomerService);
 categoryList: category[]=[];
 router = inject(Router);
@@ -28,30 +28,33 @@ authService = inject(AuthService);
 searchTerm!:string;
 
 ngOnInit(): void {
-	interval(300).pipe(
-		switchMap(() => {
-		  if (this.authService.isLoggedIn) {
-			// Check if the user is logged in and the categoryList is empty
-			if (this.categoryList.length === 0) {
-			  // Make the service call to get categories
-			  return this.customerService.getCategory();
-			}
-		  }
-		  // If conditions are not met, return an empty observable
-		  return of([]);
-		})
-	  ).subscribe(
-		res => {
-		  if (res && res.length > 0) {
-			this.categoryList = res;
-		  }
-		},
-		error => {
-		  if (error.status === 401) {
-			console.error('Unauthorized access');
-		  }
+	const pollingInterval = 2000; 
+interval(pollingInterval).pipe(
+	switchMap(() => {
+	  if (this.authService.isLoggedIn) {
+		if (this.categoryList.length === 0) {
+		  return this.customerService.getCategory().pipe(
+			retry(2), 
+			catchError((error) => {
+			  if (error.status === 401) {
+				console.error('Unauthorized access');
+				this.router.navigateByUrl('/login');
+			  }
+			  return of([]);
+			})
+		  );
 		}
-	  );
+	  }
+	  return of([]);
+	}),
+	takeUntil(this.destroy$) 
+  ).subscribe(
+	(res) => {
+	  if (res && res.length > 0) {
+		this.categoryList = res;
+	  }
+	}
+  );
 }
 
 searchProduct(event:any){
@@ -74,5 +77,8 @@ onLogout() {
 	this.authService.logout();
 	this.router.navigateByUrl("/login");
 }
-
+ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 }
