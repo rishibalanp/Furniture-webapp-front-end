@@ -14,7 +14,7 @@ import { switchMap, catchError, retry, takeUntil } from 'rxjs/operators';
 @Component({
 	selector: 'app-header',
 	standalone: true,
-	imports: [RouterLink,CommonModule, MatMenuModule, MatIconModule, MatButtonModule,FormsModule],
+	imports: [RouterLink,CommonModule, MatMenuModule, MatIconModule, MatButtonModule,FormsModule,MatIconModule],
 	templateUrl: './header.component.html',
 	styleUrl: './header.component.scss'
 })

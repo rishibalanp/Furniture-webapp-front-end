@@ -12,6 +12,7 @@ import { authGuard } from './core/auth-guard';
 import { AdminComponent } from './components/manage/admin/admin.component';
 import { adminGuard } from './core/admin-guard';
 import { ProfileComponent } from './components/profile/profile.component';
+import { WishlistComponent } from './components/wishlist/wishlist.component';
 
 export const routes: Routes = [
 	{
@@ -68,6 +69,11 @@ export const routes: Routes = [
 	{
 		path: "profile",
 		component: ProfileComponent,
+		canActivate:[authGuard]
+	},
+	{
+		path: "wishlist",
+		component: WishlistComponent,
 		canActivate:[authGuard]
 	},{
 		path: "register",

@@ -33,9 +33,7 @@
             ],
             "styles": [
               "@angular/material/prebuilt-themes/azure-blue.css",
-              "src/styles.scss",
-              "node_modules/font-awesome/css/font-awesome.min.css"
-            ],
+              "src/styles.scss"            ],
             "scripts": []
           },
           "configurations": {
@@ -100,9 +98,7 @@
             ],
             "styles": [
               "@angular/material/prebuilt-themes/azure-blue.css",
-              "src/styles.scss",
-              "node_modules/font-awesome/css/font-awesome.min.css"
-            ],
+              "src/styles.scss"            ],
             "scripts": []
           }
         }

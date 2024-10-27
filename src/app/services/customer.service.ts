@@ -32,4 +32,6 @@ getSearchProduct(searchTerm: string,categoryId:string,page:Number,pageSize:numbe
 getProductById(id:string){
 	return this.http.get<Product>(environment.apiUrl+ '/customer/product/' + id);
 }
+
+
 }

@@ -12,30 +12,44 @@
 			</div>
 		</div>
 
-		<div class="header__links" *ngIf="authService.isLoggedIn">
-			<div class="user-icon">
-				<button mat-icon-button [matMenuTriggerFor]="menu">
-					<mat-icon>account_circle</mat-icon>
-					</button>   
-                    @if(authService.isAdmin){
-                        <div class="user-name cursor-pointer" routerLink="/admin">{{authService.userName}}</div>
-                    }@else{
-                        <div class="user-name cursor-pointer" routerLink="">{{authService.userName}}</div>
-                    }      
+		@if(authService.isLoggedIn){
+			<div class="header__links">
+				<div class="user-icon">
+					<button mat-icon-button [matMenuTriggerFor]="menu">
+						<mat-icon>account_circle</mat-icon>
+						</button>   
+						@if(authService.isAdmin){
+							<div class="user-name cursor-pointer" routerLink="/admin">{{authService.userName}}</div>
+						}@else{
+							<div class="user-name cursor-pointer" routerLink="">{{authService.userName}}</div>
+						}      
+	
+						<mat-menu #menu="matMenu">
+							<button mat-menu-item (click)="onProfile()">Profile Detail</button>
+							<button mat-menu-item (click)="onLogout()">Logout</button>
+						</mat-menu>
+				</div>
+	
+				<div routerLink="/wishlist" class="cursor-pointer">
+					<ng-container >
+						<mat-icon>favorite</mat-icon>Wishlist
+					</ng-container>
+				</div>
+				<div class="cursor-pointer">
+					<ng-container>
+						<mat-icon>shopping_cart</mat-icon>Cart
+					</ng-container>
+				</div>
+			</div>
+		}
+		
+		@if(!authService.isLoggedIn){
+			<div class="header__links" >
+				<div class="log-register cursor-pointer" routerLink="/login">Log in</div>
+				<div class="log-register cursor-pointer" routerLink="/register">Register</div>
+			</div>
+		}
 
-					<mat-menu #menu="matMenu">
-						<button mat-menu-item (click)="onProfile()">Profile Detail</button>
-						<button mat-menu-item (click)="onLogout()">Logout</button>
-					</mat-menu>
-			</div>
-			<div>
-				<a href="#" class="header__link"><i class="fa fa-shopping-cart"></i>Cart</a>
-			</div>
-		</div>
-        <div class="header__links" *ngIf="!authService.isLoggedIn">
-            <div class="log-register cursor-pointer" routerLink="/login">Log in</div>
-            <div class="log-register cursor-pointer" routerLink="/register">Register</div>
-        </div>
 	</div>
 	</header>
 

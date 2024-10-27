@@ -1,11 +1,23 @@
-<div class="product-card" [routerLink]="'product/'+product._id">
-    <img [src]="product.images[0]" alt="Product Image" />
-    <div class="product-info">
+<div class="product-card cursor-pointer">
+    <img [src]="product.images[0]" alt="Product Image" [routerLink]="'/product/'+product._id"/>
+    <button mat-mini-fab class="favorite-icon" color="white" (click)="addWishlist(product)">
+      @if(inWishlist(product)){
+        <mat-icon class="text-red-500">favorite</mat-icon>
+      }@else {
+        <mat-icon class="text-red-500">favorite_border</mat-icon>
+      }
+    </button>
+    <div class="product-info" [routerLink]="'/product/'+product._id">
       <h3>{{product.name}}</h3>
       <p>{{product.shortDescription}}</p>
-      <div class="text-3xl font-bold mb-2 text-gray-800">₹{{sellingPrice}} <br> <span class="line-through text-gray-500"><s>₹{{product.price}}</s></span> <span class="text-green-600 px-4">{{product.discount}}% off</span></div>
-      <button mat-raised-button class="addtocart">
-        Add to cart
-      </button>
+      <div class="text-2l font-bold mb-2 text-gray-800"><span class="mr-2">₹{{sellingPrice}}</span><span class="line-through text-gray-500"><s>₹{{product.price}}</s></span> <span class="text-green-600 px-4">{{product.discount}}% off</span></div>
+      <div>
+       
+        <button mat-mini-fab>
+          <mat-icon>add_shopping_cart</mat-icon>
+          <!-- <mat-icon>remove_shopping_cart</mat-icon> -->
+        </button>
+      </div>
+   
     </div>
   </div>

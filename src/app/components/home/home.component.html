@@ -12,6 +12,7 @@
           </owl-carousel-o>
     </div>
 
+	<div>
 	<h4 class="featured-product my-20">
 		Featured Product
 	</h4>
@@ -22,14 +23,17 @@
 			} 
 		</div>
 	</div>
-	<h4 class="featured-product my-20">
-		New Product
-	</h4>
-	<div class="featured">
-		<div class="featured-div">
-			@for(product of newProducts; track $index){
-				<app-product-card [product]="product"></app-product-card>
-			} 
+	</div>
+	<div>
+		<h4 class="featured-product my-20">
+			New Product
+		</h4>
+		<div class="featured">
+			<div class="featured-div">
+				@for(product of newProducts; track $index){
+					<app-product-card [product]="product"></app-product-card>
+				} 
+			</div>
 		</div>
 	</div>
 </div>

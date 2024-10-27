@@ -5,60 +5,6 @@ $cardprimary-color: #3498db;
 $shadow-color: rgba(0, 0, 0, 0.1);
 $hover-shadow-color: rgba(0, 0, 0, 0.3);
 
-
-.product-card {
-	width: 300px;
-	background-color: $product-card-bg;
-	border-radius: 10px;
-	box-shadow: 0 4px 8px $shadow-color;
-	overflow: hidden;
-	transition: box-shadow 0.3s ease, transform 0.3s ease;
-
-	&:hover {
-		box-shadow: 0 8px 16px $hover-shadow-color;
-		transform: translateY(-5px);
-	}
-
-	img {
-		width: 100%;
-		height: 200px;
-		object-fit: cover;
-	}
-
-	.product-info {
-		padding: 15px;
-		text-align: center;
-
-		h3 {
-			font-size: 1.2rem;
-			color: $secondary-color;
-			margin-bottom: 10px;
-		}
-
-		.price {
-			font-size: 1.1rem;
-			color: $primary-color;
-			margin-bottom: 15px;
-		}
-
-		.btn {
-			display: inline-block;
-			padding: 10px 20px;
-			background-color: $primary-color;
-			color: #fff;
-			border-radius: 5px;
-			text-transform: uppercase;
-			font-weight: bold;
-			text-decoration: none;
-			transition: background-color 0.3s ease;
-
-			&:hover {
-				background-color: darken($primary-color, 10%);
-			}
-		}
-	}
-}
-
 .featured{
 	text-align: -webkit-center;
 }
