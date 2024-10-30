@@ -1,0 +1,165 @@
+<div class="max-w-3xl mx-auto p-6 bg-gray-100 rounded-lg shadow-lg mt-10">
+  @if(orderStep == 0){
+    <h2 class="text-2xl font-bold mb-6 text-gray-800">Shopping Cart</h2>
+    <div class="space-y-4">
+      @for (item of cartItems; track $index) {
+        <div
+          class="bg-white p-4 rounded-lg shadow flex items-center justify-between"
+        >
+          <div class="flex items-center">
+            <img
+              [src]="item.product.images"
+              alt="Product Image"
+              class="w-16 h-16 rounded-lg mr-4"
+            />
+            <div>
+              <h3 class="!text-xl font-semibold text-gray-700">
+                {{ item.product.name }}
+              </h3>
+              <div class="text-2l font-bold mb-2 text-gray-800">
+                <span class="mr-2">₹{{ sellingPrice(item.product) }}</span>
+                <span class="line-through text-gray-500"
+                  ><s>₹{{ item.product.price }}</s></span
+                >
+                <span class="text-green-600 px-4"
+                  >{{ item.product.discount }}% off</span
+                >
+              </div>
+              <div>Amount: {{ sellingPrice(item.product) * item.quantity }}</div>
+            </div>
+          </div>
+          <div class="flex items-center">
+            <span class="m-4">Quantity</span>
+            <button
+              class="bg-gray-300 text-gray-800 px-2 py-1 rounded-l"
+              (click)="addToCart(item.product._id!, -1)"
+            >
+              -
+            </button>
+            <span class="px-4 py-2 bg-gray-200 text-gray-700">{{
+              item.quantity
+            }}</span>
+            <button
+              class="bg-gray-300 text-gray-800 px-2 py-1 rounded-r"
+              (click)="addToCart(item.product._id!, 1)"
+            >
+              +
+            </button>
+          </div>
+          <button
+            class="bg-red-500 text-white px-4 py-2 rounded-lg"
+            (click)="removeCart(item.product._id!)"
+          >
+            Remove
+          </button>
+        </div>
+      }
+    </div>
+    <div class="bg-white p-4 rounded-lg shadow mt-6">
+      <div class="flex justify-between items-center">
+        <h3 class="text-lg font-semibold text-gray-800">Total:</h3>
+        <p class="text-xl font-bold text-gray-900">₹{{ totalAmount }}</p>
+      </div>
+      <button
+        (click)="checkOut()"
+        class="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700"
+      >
+        Proceed to Checkout
+      </button>
+    </div>
+  }@else if(orderStep == 1){
+    <div>
+      <h2 class="text-2xl font-bold mb-6 text-gray-800">Order Address</h2>
+          <h2>Address</h2>
+          <form [formGroup]="addressForm">
+            <div class="input-box form-group">
+              <input type="text" formControlName="address1" required 
+              class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['address1'].errors }"
+              />
+              <label>address1</label>
+                @if (submitted && f['address1'].errors) {
+                  <div class="invalid-feedback">
+                    @if (f['address1'].errors['required']) {
+                    <div>address is required</div>
+                    }
+                  </div>
+                  }
+            </div>
+            <div class="input-box form-group">
+              <input type="text" formControlName="address2" required 
+                class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f['address2'].errors }"
+                />
+              <label>address2</label>
+                @if (submitted && f['address2'].errors) {
+                  <div class="invalid-feedback">
+                    @if (f['address2'].errors['required']) {
+                    <div>address2 is required</div>
+                    }
+                  </div>
+                  }
+            </div>
+            <div class="input-box form-group">
+              <input type="text" formControlName="city" required 
+                class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f['city'].errors }"
+                />
+              <label>city</label>
+                @if (submitted && f['city'].errors) {
+                  <div class="invalid-feedback">
+                    @if (f['city'].errors['required']) {
+                    <div>city is required</div>
+                    }
+                  </div>
+                  }
+            </div>
+            <div class="input-box form-group">
+              <input type="text" formControlName="state" required 
+                class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f['state'].errors }"
+                />
+              <label>state</label>
+                @if (submitted && f['state'].errors) {
+                  <div class="invalid-feedback">
+                    @if (f['state'].errors['required']) {
+                    <div>state is required</div>
+                    }
+                  </div>
+                  }
+            </div>
+            <div class="input-box form-group">
+              <input type="text" formControlName="pincode" required 
+                class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f['pincode'].errors }"
+                />
+              <label>pincode</label>
+                @if (submitted && f['pincode'].errors) {
+                  <div class="invalid-feedback">
+                    @if (f['pincode'].errors['required']) {
+                    <div>pincode is required</div>
+                    }
+                  </div>
+                  }
+            </div>
+
+
+            <button class="mt-4 w-full  text-white py-2 rounded-lg font-semibold" (click)="addAddress()">Next</button>
+          </form>
+    </div>
+
+  }@else if(orderStep == 2){
+    <div>
+      <h2 class="text-2xl font-bold mb-6 text-gray-800">Select Payment Method</h2>
+
+      <mat-radio-group aria-label="Select an option" [(ngModel)]="paymentType">
+        <mat-radio-button value="cash">CASH</mat-radio-button>
+        <mat-radio-button value="card">CARD</mat-radio-button>
+        <mat-radio-button value="net_banking">NET BANKING</mat-radio-button>
+        <mat-radio-button value="upi">UPI</mat-radio-button>
+      </mat-radio-group>
+
+      <button class="mt-4 w-full  text-white py-2 rounded-lg font-semibold" (click)="completeOrder()">Continue</button>
+    </div>
+  }
+</div>

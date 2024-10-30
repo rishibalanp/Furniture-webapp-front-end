@@ -5,16 +5,30 @@ $cardprimary-color: #3498db;
 $shadow-color: rgba(0, 0, 0, 0.1);
 $hover-shadow-color: rgba(0, 0, 0, 0.3);
 
-.featured{
-	text-align: -webkit-center;
+
+.home{
+	.featured-product{
+		font-size: 36px;
+		font-weight: 700;
+		margin-top: 2rem;
+		color: $primary-color;
+		display: flex;
+		justify-content: center;
+		text-transform: uppercase;
+	}
+	.featured{
+		text-align: -webkit-center;
+		.featured-div{
+			display: flex;
+			flex-wrap: wrap;
+			gap: 1rem;
+			width: 100%;
+			padding-inline: 15px;
+		}
+	}
 }
-.featured-div{
-	display: flex;
-	flex-wrap: wrap;
-	gap: 1rem;
-	width: 100%;
-	padding-inline: 15px;
-}
+
+
 
 @media (min-width: 1200px) {
 	.featured-div{
@@ -40,12 +54,4 @@ $hover-shadow-color: rgba(0, 0, 0, 0.3);
 		margin-inline: auto;
 	}
 }
-.featured-product{
-	font-size: 36px;
-	font-weight: 700;
-	margin-top: 2rem;
-	color: $primary-color;
-	display: flex;
-	justify-content: center;
-	text-transform: uppercase;
-}
+

@@ -13,6 +13,7 @@ import { AdminComponent } from './components/manage/admin/admin.component';
 import { adminGuard } from './core/admin-guard';
 import { ProfileComponent } from './components/profile/profile.component';
 import { WishlistComponent } from './components/wishlist/wishlist.component';
+import { CartComponent } from './components/cart/cart.component';
 
 export const routes: Routes = [
 	{
@@ -74,6 +75,11 @@ export const routes: Routes = [
 	{
 		path: "wishlist",
 		component: WishlistComponent,
+		canActivate:[authGuard]
+	},
+	{
+		path: "cart",
+		component: CartComponent,
 		canActivate:[authGuard]
 	},{
 		path: "register",

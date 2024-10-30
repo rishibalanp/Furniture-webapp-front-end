@@ -1,86 +1,117 @@
-@if(product){
-	<div>
-		<div class="max-w-7xl mx-auto p-6 bg-white mt-5 productdeatil ">
-			<div class="flex flex-col md:flex-row">
-				<div class="w-full md:w-1/3">
-					<div class="space-y-2">
-						<div>
-							<img [src]="mainImage" alt="Product thumbnail" class="rounded-lg w-full h-96 shadow" />
-						</div>
-						<div class="flex space-x-2">
-							@for(item of product.images; track $index){
-								<img [src]="item" alt="thumbnail" class="w-16 h-16 object-cover rounded-md cursor-pointer" (click)="changeImage(item)" />
-							}
-						</div>
-					</div>
-				</div>
-		
-				<!-- Right Side: Product Information -->
-				<div class="w-full md:w-2/3 md:pl-8 h-auto">
-					<h1 class="productdetail-name">{{product.name}}</h1>
-					<p class="text-green-600 font-semibold mb-1">4.6 ★ | 1,61,542 Ratings & 5,245 Reviews</p>
-					<p class="text-lg mb-4">{{product.shortDescription}}</p>
-					<div class="text-3xl font-bold mb-2 text-gray-800">₹{{sellingPrice}} <span class="line-through text-gray-500"><s>₹{{product.price}}</s></span> <span class="text-green-600 px-4">{{product.discount}}% off</span></div>
-		
-		
-		
-					<!-- Purchase Options -->
-					<div class="flex items-center space-x-4 button-div">
-						<button mat-raised-button class="favorite-icon" (click)="addWishlist(product)">
-							@if(inWishlist(product)){
-								<ng-container>
-									<mat-icon class="text-red-500">favorite</mat-icon> Remove from wishlist
-								</ng-container>
-							}@else {
-								<ng-container>
-									<mat-icon class="text-red-500">favorite_border</mat-icon> Add to wishlist
-								</ng-container>
-							}
-						  </button>
-						<button class="bg-yellow-400 text-white py-2 px-4 rounded-md shadow-md hover:bg-yellow-500 mat-flat-button">
-							ADD TO CART
-						</button>
-					</div>
-		
-						<!-- Offers -->
-						<div class=" border-gray border-b py-4 mb-4 pt-4">
-							<p class="font-semibold text-gray-700">Product Description</p>
-							<div>
-								<pre class="pre-tag" *ngIf="product">{{product.description}} </pre>
-							</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		@if(similarProducts.length){
-			<h4 class="featured-product my-20">
-				Similar Product
-			</h4>
-			<div class="featured">
-				<div class="featured-div justify-center">
-					@for(product of similarProducts; track $index){
-						<app-product-card [product]="product"></app-product-card>
-					} 
-				</div>
-			</div>
-		}
-		
-		
-		<div class="max-w-7xl mx-auto p-6 bg-white mt-5 productdeatil ">
-			<div class="flex flex-col md:flex-row"></div>
-		  <div class="border-gray py-4 mb-4 pt-4">
-			<p class="font-semibold text-gray-700">Product Details</p>
-			<div>
-			  <pre class="pre-tag" *ngIf="product">{{product.description}} </pre>
-			</div>
-		  </div>
-		</div>
-		
-		
-	</div>
-	
-	
-}@else {
-	<h2>Loading...</h2>
+@if (product) {
+  <div>
+    <div class="max-w-7xl mx-auto p-6 bg-white mt-5 productdeatil">
+      <div class="flex flex-col md:flex-row">
+        <div class="w-full md:w-1/3">
+          <div class="space-y-2">
+            <div>
+              <img
+                [src]="mainImage"
+                alt="Product thumbnail"
+                class="rounded-lg w-full h-96 shadow"
+              />
+            </div>
+            <div class="flex space-x-2">
+              @for (item of product.images; track $index) {
+                <img
+                  [src]="item"
+                  alt="thumbnail"
+                  class="w-16 h-16 object-cover rounded-md cursor-pointer"
+                  (click)="changeImage(item)"
+                />
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: Product Information -->
+        <div class="w-full md:w-2/3 md:pl-8 h-auto">
+          <h1 class="productdetail-name">{{ product.name }}</h1>
+          <p class="text-green-600 font-semibold mb-1">
+            4.6 ★ | 1,61,542 Ratings & 5,245 Reviews
+          </p>
+          <p class="text-lg mb-4">{{ product.shortDescription }}</p>
+          <div class="text-3xl font-bold mb-2 text-gray-800">
+            ₹{{ sellingPrice }}
+            <span class="line-through text-gray-500"
+              ><s>₹{{ product.price }}</s></span
+            >
+            <span class="text-green-600 px-4">{{ product.discount }}% off</span>
+          </div>
+
+          <!-- Purchase Options -->
+          <div class="flex items-center space-x-4 button-div">
+            <button
+              mat-raised-button
+              class="favorite-icon"
+              (click)="addWishlist(product)"
+            >
+              @if (inWishlist(product)) {
+                <ng-container>
+                  <mat-icon class="text-red-500">favorite</mat-icon> Remove from
+                  wishlist
+                </ng-container>
+              } @else {
+                <ng-container>
+                  <mat-icon class="text-red-500">favorite_border</mat-icon> Add
+                  to wishlist
+                </ng-container>
+              }
+            </button>
+
+            @if (inCart(product._id!)) {
+				<button
+                class="bg-yellow-400 text-white py-2 px-4 rounded-md shadow-md hover:bg-yellow-500 mat-flat-button"
+                (click)="addToCart(product)"
+              >
+			  <mat-icon>remove_shopping_cart</mat-icon>
+                REMOVE FROM CART
+              </button>
+            } @else {
+			  <button
+                class="bg-yellow-400 text-white py-2 px-4 rounded-md shadow-md hover:bg-yellow-500 mat-flat-button"
+                (click)="addToCart(product)"
+              >
+			  <mat-icon>add_shopping_cart</mat-icon>
+                ADD TO CART
+              </button>
+            }
+          </div>
+
+          <!-- Offers -->
+          <div class="border-gray border-b py-4 mb-4 pt-4">
+            <p class="font-semibold text-gray-700">Product Description</p>
+            <div>
+              <pre class="pre-tag" *ngIf="product"
+                >{{ product.description }} </pre
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    @if (similarProducts.length) {
+      <h4 class="featured-product my-20">Similar Product</h4>
+      <div class="featured">
+        <div class="featured-div justify-center">
+          @for (product of similarProducts; track $index) {
+            <app-product-card [product]="product"></app-product-card>
+          }
+        </div>
+      </div>
+    }
+
+    <div class="max-w-7xl mx-auto p-6 bg-white mt-5 productdeatil">
+      <div class="flex flex-col md:flex-row"></div>
+      <div class="border-gray py-4 mb-4 pt-4">
+        <p class="font-semibold text-gray-700">Product Details</p>
+        <div>
+          <pre class="pre-tag" *ngIf="product">{{ product.description }} </pre>
+        </div>
+      </div>
+    </div>
+  </div>
+} @else {
+  <h2>Loading...</h2>
 }

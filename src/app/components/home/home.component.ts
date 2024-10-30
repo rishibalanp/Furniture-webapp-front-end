@@ -5,6 +5,7 @@ import { Product } from '../../types/product';
 import { ProductCardComponent } from '../product-card/product-card.component';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { WishlistService } from '../../services/wishlist.service';
+import { CartService } from '../../services/cart.service';
 @Component({
 	selector: 'app-home',
 	standalone: true,
@@ -28,6 +29,7 @@ export class HomeComponent implements OnInit{
 
 
 wishlistService = inject(WishlistService);
+cartService = inject(CartService);
 customerService = inject(CustomerService);
 newProducts: Product[]=[];
 featuredProducts: Product[]=[];
@@ -48,6 +50,7 @@ ngOnInit(): void {
     console.log(this.bannerImages,'new');
   });
   this.wishlistService.init();
+  this.cartService.init();
 }
 
 } 

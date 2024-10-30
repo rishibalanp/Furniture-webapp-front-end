@@ -7,15 +7,18 @@
         <mat-icon class="text-red-500">favorite_border</mat-icon>
       }
     </button>
-    <div class="product-info" [routerLink]="'/product/'+product._id">
-      <h3>{{product.name}}</h3>
-      <p>{{product.shortDescription}}</p>
-      <div class="text-2l font-bold mb-2 text-gray-800"><span class="mr-2">₹{{sellingPrice}}</span><span class="line-through text-gray-500"><s>₹{{product.price}}</s></span> <span class="text-green-600 px-4">{{product.discount}}% off</span></div>
+    <div class="product-info">
+      <h3 [routerLink]="'/product/'+product._id">{{product.name}}</h3>
+      <p [routerLink]="'/product/'+product._id">{{product.shortDescription}}</p>
+      <div [routerLink]="'/product/'+product._id" class="text-2l font-bold mb-2 text-gray-800"><span class="mr-2">₹{{sellingPrice}}</span><span class="line-through text-gray-500"><s>₹{{product.price}}</s></span> <span class="text-green-600 px-4">{{product.discount}}% off</span></div>
       <div>
        
-        <button mat-mini-fab>
-          <mat-icon>add_shopping_cart</mat-icon>
-          <!-- <mat-icon>remove_shopping_cart</mat-icon> -->
+        <button mat-mini-fab (click)="addToCart(product)">
+          @if(inCart(product._id!)){
+            <mat-icon>remove_shopping_cart</mat-icon>
+          }@else {
+            <mat-icon>add_shopping_cart</mat-icon>
+          }
         </button>
       </div>
    
