@@ -1,7 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { environment} from './../../environments/environment'
 import { HttpClient } from '@angular/common/http';
-import { Product } from '../types/product';
 import { CartItem } from '../types/cart';
 
 @Injectable({

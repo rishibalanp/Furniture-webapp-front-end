@@ -3,7 +3,6 @@ import { inject, Injectable } from '@angular/core';
 import { Product } from '../types/product';
 import { environment } from '../../environments/environment';
 import { category } from '../types/category';
-import { NumberSymbol } from '@angular/common';
 
 @Injectable({
 	providedIn: 'root'

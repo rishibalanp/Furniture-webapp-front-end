@@ -49,8 +49,6 @@ ngOnInit(): void {
     this.bannerImages.push(...res);
     console.log(this.bannerImages,'new');
   });
-  this.wishlistService.init();
-  this.cartService.init();
 }
 
 } 
