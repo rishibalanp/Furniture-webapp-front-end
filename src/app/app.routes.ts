@@ -15,6 +15,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { WishlistComponent } from './components/wishlist/wishlist.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CustomerOrderComponent } from './components/customer-order/customer-order.component';
+import { OrdersComponent } from './components/manage/orders/orders.component';
 
 export const routes: Routes = [
 	{
@@ -46,6 +47,11 @@ export const routes: Routes = [
 	{
 		path:"admin/product",
 		component: ProductComponent,
+		canActivate:[adminGuard]
+	},
+	{
+		path:"admin/orders",
+		component: OrdersComponent,
 		canActivate:[adminGuard]
 	},
 	{

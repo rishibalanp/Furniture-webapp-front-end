@@ -14,7 +14,16 @@ export class OrderService {
     return this.http.post(environment.apiUrl + '/customer/order', order);
   }
 
-  getCustomerOrder(){
+  getCustomerOrder() {
     return this.http.get<Order[]>(environment.apiUrl + '/customer/order');
+  }
+  getAdminOrder() {
+    return this.http.get<Order[]>(environment.apiUrl + '/order');
+  }
+
+  updateStatus(id: string, status: string) {
+    return this.http.post(environment.apiUrl + '/order/'+id, {
+      status: status,
+    });
   }
 }

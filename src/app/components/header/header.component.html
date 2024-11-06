@@ -26,21 +26,25 @@
 	
 						<mat-menu #menu="matMenu">
 							<button mat-menu-item (click)="onProfile()">Profile Detail</button>
-							<button mat-menu-item routerLink="/order">Orders</button>
+							@if(!authService.isAdmin){
+								<button mat-menu-item routerLink="/order">Orders</button>
+							}
 							<button mat-menu-item (click)="onLogout()">Logout</button>
 						</mat-menu>
 				</div>
 	
-				<div routerLink="/wishlist" class="cursor-pointer">
-					<ng-container >
-						<mat-icon>favorite</mat-icon>Wishlist
-					</ng-container>
-				</div>
-				<div routerLink="/cart" class="cursor-pointer">
-					<ng-container>
-						<mat-icon>shopping_cart</mat-icon>Cart
-					</ng-container>
-				</div>
+				@if(!authService.isAdmin){
+					<div routerLink="/wishlist" class="cursor-pointer">
+						<ng-container >
+							<mat-icon>favorite</mat-icon>Wishlist
+						</ng-container>
+					</div>
+					<div routerLink="/cart" class="cursor-pointer">
+						<ng-container>
+							<mat-icon>shopping_cart</mat-icon>Cart
+						</ng-container>
+					</div>
+				}
 			</div>
 		}
 		

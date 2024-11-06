@@ -1,0 +1,73 @@
+<div class="p-6 bg-gray-100 min-h-screen flex justify-center">
+    <div class="w-full md:w-3/5 space-y-4">
+      <h1 class="text-3xl font-semibold text-teal-700 mb-8 text-center">
+        Order List
+      </h1>
+  
+      @for (order of orders; track $index) {
+        <div class="flex">
+          <div class="w-6/12">
+            <h6>Order Id: {{order._id}}</h6>
+            <span>Date: {{order.date | date:'mediumDate'}}</span>
+          </div>
+          <div class="w-6/12">
+            <mat-button-toggle-group name="status" [value]="order.status" aria-label="Font Style" (change)="statusChanged($event,order)">
+              <mat-button-toggle value="ordered">Ordered</mat-button-toggle>
+              <mat-button-toggle value="dispathced">Dispathced</mat-button-toggle>
+              <mat-button-toggle value="shipped">Shipped</mat-button-toggle>
+              <mat-button-toggle value="delivered">Delivered</mat-button-toggle>
+            </mat-button-toggle-group>
+          </div>
+        </div>
+       
+        <div class="">
+          @for (item of order.items; track $index) {
+            <div class="bg-white p-4 shadow">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                  <img
+                    [src]="item.product.images"
+                    alt="Product Image"
+                    class="w-24 h-24 mr-4"
+                  />
+                  <div>
+                    <h3 class="!text-xl font-semibold text-gray-700">
+                      {{ item.product.name }}
+                    </h3>
+                    <div class="text-2l font-bold mb-2 text-gray-800">
+                      <span class="mr-2">₹{{ sellingPrice(item.product) }}</span>
+                      <span class="line-through text-gray-500"
+                        ><s>₹{{ item.product.price }}</s></span
+                      >
+                      <span class="text-green-600 px-4"
+                        >{{ item.product.discount }}% off</span
+                      >
+                    </div>
+                    <div>
+                      Amount: {{ sellingPrice(item.product) * item.quantity }}
+                    </div>
+                  </div>
+                </div>
+                <div class="flex items-center">
+                  <span class="m-4">Quantity</span>
+                  <span class="px-4 py-2 bg-gray-200 text-gray-700">{{
+                    item.quantity
+                  }}</span>
+                </div>
+              </div>
+            </div>
+          }
+          <div class="flex justify-center w-full mt-4">
+            <button
+              class="bg-teal-600 text-white font-light py-2 px-4 rounded-md hover:bg-teal-700"
+            >
+              View Details
+            </button>
+          </div>
+        </div>
+      } @empty {
+        <h1>No order history</h1>
+      }
+    </div>
+  </div>
+  
