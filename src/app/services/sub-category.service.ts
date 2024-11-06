@@ -14,6 +14,9 @@ export class SubCategoryService {
   getCategory() {
     return this.http.get<subCategory[]>(environment.apiUrl + '/subcategory');
   }
+  getCategorybyParentId(id:string) {
+    return this.http.get<subCategory[]>(environment.apiUrl + '/subcategory/bycategory/'+id);
+  }
 
   getCategorybyid(id: string) {
     return this.http.get<subCategory>(environment.apiUrl + '/subcategory/' + id);

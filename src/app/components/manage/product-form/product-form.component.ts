@@ -10,6 +10,8 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import Swal from 'sweetalert2';
 import { TYPE } from './../../../types/alert';
+import { subCategory } from '../../../types/subcategory';
+import { SubCategoryService } from '../../../services/sub-category.service';
 
 @Component({
 	selector: 'app-product-form',
@@ -29,12 +31,15 @@ productForm = this.formBuilder.group({
 	shortDescription: [null, [Validators.required,Validators.minLength(10)]],
 	images: this.formBuilder.array([]),
 	categoryId:[null,Validators.required],
+	subCategoryId:[null,Validators.required],
 	isFeatured:[false],
 	isNewProduct:[false]
 });
 
 categories: category[] = [];
+subCategory: subCategory[]=[];
 categoryService = inject(CategoryService);
+subcategoryService = inject(SubCategoryService);
 productService = inject(ProductService);
 router = inject(Router);
 route = inject(ActivatedRoute);
@@ -44,6 +49,17 @@ id!:string;
 ngOnInit(): void {
 	this.categoryService.getCategory().subscribe((categories) => {
 		this.categories = categories; 
+	});
+	this.productForm.get('categoryId')?.valueChanges.subscribe((selectedCategoryId) => {
+		if (selectedCategoryId) {
+			this.subcategoryService.getCategorybyParentId(selectedCategoryId).subscribe((filteredSubCategories) => {
+				this.subCategory = filteredSubCategories;
+				console.log(this.subCategory,'testdsbjdjsd');
+				
+			});
+		} else {
+			this.subCategory = []; // Clear subcategories if no category is selected
+		}
 	});
 	this.id = this.route.snapshot.params["id"];
 	if(this.id){
