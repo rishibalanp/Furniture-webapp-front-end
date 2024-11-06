@@ -16,6 +16,8 @@ import { WishlistComponent } from './components/wishlist/wishlist.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CustomerOrderComponent } from './components/customer-order/customer-order.component';
 import { OrdersComponent } from './components/manage/orders/orders.component';
+import { SubCategoryComponent } from './components/manage/sub-category/sub-category.component';
+import { SubCategoryFormComponent } from './components/manage/sub-category-form/sub-category-form.component';
 
 export const routes: Routes = [
 	{
@@ -42,6 +44,21 @@ export const routes: Routes = [
 	{
 		path:"admin/categories/:id",
 		component: CategoryFormComponent,
+		canActivate:[adminGuard]
+	},
+	{
+		path:"admin/subcategory",
+		component: SubCategoryComponent,
+		canActivate:[adminGuard]
+	},
+	{
+		path:"admin/subcategory/add",
+		component: SubCategoryFormComponent,
+		canActivate:[adminGuard]
+	},
+	{
+		path:"admin/subcategory/:id",
+		component: SubCategoryFormComponent,
 		canActivate:[adminGuard]
 	},
 	{
