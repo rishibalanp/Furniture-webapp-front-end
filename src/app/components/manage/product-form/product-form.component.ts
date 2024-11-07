@@ -33,7 +33,15 @@ productForm = this.formBuilder.group({
 	categoryId:[null,Validators.required],
 	subCategoryId:[null,Validators.required],
 	isFeatured:[false],
-	isNewProduct:[false]
+	isNewProduct:[false],
+	customizations: [null,[Validators.required]],
+	productDimensions: [null,[Validators.required]],
+	weight: [null,[Validators.required]],
+	material: [null,[Validators.required]],
+	color: [null,[Validators.required]],
+	care: [null,[Validators.required]],
+	shape: [null,[Validators.required]],
+	finishType: [null,[Validators.required]],
 });
 
 categories: category[] = [];

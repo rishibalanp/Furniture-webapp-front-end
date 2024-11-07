@@ -28,59 +28,66 @@ export const routes: Routes = [
 	{
 		path:"admin",
 		component:AdminComponent,
-		canActivate:[adminGuard]
-
+		canActivate:[adminGuard],
+		children:[
+			{
+				path:"",
+				component: CategoriesComponent,
+				canActivate:[adminGuard]
+			},
+			{
+				path:"categories",
+				component: CategoriesComponent,
+				canActivate:[adminGuard]
+			},
+			{
+				path:"categories/add",
+				component: CategoryFormComponent,
+				canActivate:[adminGuard]
+			},
+			{
+				path:"categories/:id",
+				component: CategoryFormComponent,
+				canActivate:[adminGuard]
+			},
+			{
+				path:"subcategory",
+				component: SubCategoryComponent,
+				canActivate:[adminGuard]
+			},
+			{
+				path:"subcategory/add",
+				component: SubCategoryFormComponent,
+				canActivate:[adminGuard]
+			},
+			{
+				path:"subcategory/:id",
+				component: SubCategoryFormComponent,
+				canActivate:[adminGuard]
+			},
+			{
+				path:"product",
+				component: ProductComponent,
+				canActivate:[adminGuard]
+			},
+			{
+				path:"orders",
+				component: OrdersComponent,
+				canActivate:[adminGuard]
+			},
+			{
+				path:"product/add",
+				component: ProductFormComponent,
+				canActivate:[adminGuard]
+			},
+			{
+				path:"product/:id",						
+				component: ProductFormComponent,
+				canActivate:[adminGuard]
+			},
+		]
 	},
-	{
-		path:"admin/categories",
-		component: CategoriesComponent,
-		canActivate:[adminGuard]
-	},
-	{
-		path:"admin/categories/add",
-		component: CategoryFormComponent,
-		canActivate:[adminGuard]
-	},
-	{
-		path:"admin/categories/:id",
-		component: CategoryFormComponent,
-		canActivate:[adminGuard]
-	},
-	{
-		path:"admin/subcategory",
-		component: SubCategoryComponent,
-		canActivate:[adminGuard]
-	},
-	{
-		path:"admin/subcategory/add",
-		component: SubCategoryFormComponent,
-		canActivate:[adminGuard]
-	},
-	{
-		path:"admin/subcategory/:id",
-		component: SubCategoryFormComponent,
-		canActivate:[adminGuard]
-	},
-	{
-		path:"admin/product",
-		component: ProductComponent,
-		canActivate:[adminGuard]
-	},
-	{
-		path:"admin/orders",
-		component: OrdersComponent,
-		canActivate:[adminGuard]
-	},
-	{
-		path:"admin/product/add",
-		component: ProductFormComponent,
-		canActivate:[adminGuard]
-	},
-	{
-		path:"admin/product/:id",						
-		component: ProductFormComponent,
-		canActivate:[adminGuard]
-	},
+	
 	{
 		path: "product",
 		component: ProductListComponent,
