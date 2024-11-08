@@ -1,39 +1,35 @@
-<div class="home m-3">
-    <div class="shadow">
-        <owl-carousel-o [options]="customOptions">
-            @for(  image of bannerImages; track $index){
-                <ng-template carouselSlide>
-                  <div class="relative flex flex-col items-center" [routerLink]="'product/'+image._id">
-                        <img [src]="image.images[0]" alt="image">
-                        <span>{{image.name}}</span>
-                  </div>
-                </ng-template>  
-            }
-          </owl-carousel-o>
-    </div>
+<div class="home px-4 sm:px-6 lg:px-8">
+  <!-- Carousel Section -->
+  <div class="shadow mb-10">
+    <owl-carousel-o [options]="customOptions">
+      <ng-container *ngFor="let image of bannerImages; index as i">
+        <ng-template carouselSlide>
+          <div class="relative flex flex-col items-center" [routerLink]="'product/' + image._id">
+            <img [src]="image.images[0]" alt="image" class="w-full h-auto object-cover">
+            <span class="text-primary hover:text-secondary text-sm sm:text-base md:text-lg">{{ image.name }}</span>
+          </div>
+        </ng-template>
+      </ng-container>
+    </owl-carousel-o>
+  </div>
 
-	<div>
-	<h4 class="featured-product my-20">
-		Featured Product
-	</h4>
-	<div class="featured">
-		<div class="featured-div">
-			@for(product of featuredProducts; track $index){
-				<app-product-card [product]="product"> </app-product-card>
-			} 
-		</div>
-	</div>
-	</div>
-	<div>
-		<h4 class="featured-product my-20">
-			New Product
-		</h4>
-		<div class="featured">
-			<div class="featured-div">
-				@for(product of newProducts; track $index){
-					<app-product-card [product]="product"></app-product-card>
-				} 
-			</div>
-		</div>
-	</div>
+  <!-- Featured Products Section -->
+  <div class="my-20">
+    <h4 class="text-2xl font-semibold text-primary mb-4 text-center">Featured Products</h4>
+    <div class="flex justify-center items-center overflow-x-auto space-x-6">
+      <ng-container *ngFor="let product of featuredProducts; index as i">
+        <app-product-card [product]="product" class="w-64 sm:w-72 md:w-80 flex-shrink-0"> </app-product-card>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- New Products Section -->
+  <div class="my-20">
+    <h4 class="text-2xl font-semibold text-primary mb-4 text-center">New Products</h4>
+    <div class="flex justify-center items-center overflow-x-auto space-x-6">
+      <ng-container *ngFor="let product of newProducts; index as i">
+        <app-product-card [product]="product" class="w-64 sm:w-72 md:w-80 flex-shrink-0"> </app-product-card>
+      </ng-container>
+    </div>
+  </div>
 </div>

@@ -1,77 +1,124 @@
-<header class="header">
-	<div class="container mx-auto flex items-center justify-between">
-		<div class="logo">
-			<a class="logo__text" routerLink=""><b>LuxAntiq</b>Furnitures</a>
-		</div>
-		<div class="search-bar">
-			<div class="relative">
-				<input type="text" placeholder="Search for products..." [(ngModel)]="searchTerm" class="search-bar__input" (keyup.enter)="searchProduct($event)">
-				<button class="search-bar__button">
-					<i class="fa fa-search"></i>
-				</button>
-			</div>
-		</div>
-
-		@if(authService.isLoggedIn){
-			<div class="header__links">
-				<div class="user-icon">
-					<button mat-icon-button [matMenuTriggerFor]="menu">
-						<mat-icon>account_circle</mat-icon>
-						</button>   
-						@if(authService.isAdmin){
-							<div class="user-name cursor-pointer" routerLink="/admin">{{authService.userName}}</div>
-						}@else{
-							<div class="user-name cursor-pointer" routerLink="">{{authService.userName}}</div>
-						}      
-	
-						<mat-menu #menu="matMenu">
-							<button mat-menu-item (click)="onProfile()">Profile Detail</button>
-							@if(!authService.isAdmin){
-								<button mat-menu-item routerLink="/order">Orders</button>
-							}
-							<button mat-menu-item (click)="onLogout()">Logout</button>
-						</mat-menu>
-				</div>
-	
-				@if(!authService.isAdmin){
-					<div routerLink="/wishlist" class="cursor-pointer">
-						<ng-container >
-							<mat-icon>favorite</mat-icon>Wishlist
-						</ng-container>
-					</div>
-					<div routerLink="/cart" class="cursor-pointer">
-						<ng-container>
-							<mat-icon>shopping_cart</mat-icon>Cart
-						</ng-container>
-					</div>
-				}
-			</div>
-		}
-		
-		@if(!authService.isLoggedIn){
-			<div class="header__links" >
-				<div class="log-register cursor-pointer" routerLink="/login">Log in</div>
-				<div class="log-register cursor-pointer" routerLink="/register">Register</div>
-			</div>
-		}
-
-	</div>
-	</header>
-
-    <div class="nav-header shadow-md ">
-        
-            @if(authService.isLoggedIn){
-				<div>
-					<nav>
-						<ul class="flex">
-							@for( category of categoryList; track $index){
-								<li (click)="searchCategory(category._id)">{{category.name}}</li>
-							}
-						</ul>
-
-					</nav>
-				</div>
-            }
+<header
+  [ngClass]="{ 'scrolled': isScrolled }"
+  class="fixed top-0 w-full bg-white text-gray-800 shadow-md z-10 transition-all duration-300"
+>
+  <div class="container mx-auto flex items-center justify-between py-4 px-6">
+    <!-- Logo Section -->
+    <div class="flex items-center space-x-2">
+      <span
+        class="text-primary text-xl font-semibold hover:text-secondary transition-colors duration-200"
+        [routerLink]="'/'"
+        >YourWebsite</span
+      >
     </div>
 
+    <!-- Search Icon (Mobile Only) -->
+    <div class="flex md:hidden">
+      <mat-icon (click)="toggleSearchBar()" class="cursor-pointer">search</mat-icon>
+    </div>
 
+    <!-- Desktop Search Bar -->
+    <div
+      class="flex-grow max-w-md mx-4"
+      [ngClass]="{'hidden': isMobile, 'md:flex': true}"
+    >
+      <input
+        type="text"
+        placeholder="Search products..."
+        [(ngModel)]="searchTerm"
+        (keyup.enter)="searchProduct($event)"
+        class="w-full p-2 bg-gray-100 text-primary focus:outline-none focus:bg-opacity-80 rounded-md"
+        aria-label="Search"
+      />
+    </div>
+
+    <!-- Cart, Wishlist, and User Icons (Desktop Only) -->
+    <div class="hidden md:flex items-center space-x-4">
+      <ng-container *ngIf="authService.isLoggedIn; else guestLinks">
+        <!-- Profile Icon -->
+        <div
+          class="flex items-center cursor-pointer text-primary hover:text-secondary transition-colors duration-200"
+        >
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>account_circle</mat-icon>
+          </button>
+        </div>
+
+        <!-- Username and Links -->
+        <span
+          class="cursor-pointer font-medium text-primary hover:text-secondary transition-colors duration-200"
+          [routerLink]="authService.isAdmin ? '/admin' : '/'"
+          >{{ authService.userName }}</span
+        >
+
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="onProfile()">Profile Detail</button>
+          <button *ngIf="!authService.isAdmin" mat-menu-item routerLink="/order">Orders</button>
+          <button mat-menu-item (click)="onLogout()">Logout</button>
+        </mat-menu>
+
+        <!-- Wishlist Icon -->
+        <div
+          *ngIf="!authService.isAdmin"
+          class="flex items-center cursor-pointer text-primary hover:text-secondary transition-colors duration-200"
+          routerLink="/wishlist"
+        >
+          <mat-icon>favorite</mat-icon>
+          <span class="ml-1">Wishlist</span>
+        </div>
+
+        <!-- Cart Icon -->
+        <div
+          *ngIf="!authService.isAdmin"
+          class="flex items-center cursor-pointer text-primary hover:text-secondary transition-colors duration-200"
+          routerLink="/cart"
+        >
+          <mat-icon>shopping_cart</mat-icon>
+          <span class="ml-1">Cart</span>
+        </div>
+      </ng-container>
+
+      <!-- Guest Links for Login/Register -->
+      <ng-template #guestLinks>
+        <div class="flex space-x-4">
+          <div
+            class="cursor-pointer text-primary hover:text-secondary transition-colors duration-200"
+            routerLink="/login"
+            >Log in</div
+          >
+          <div
+            class="cursor-pointer text-primary hover:text-secondary transition-colors duration-200"
+            routerLink="/register"
+            >Register</div
+          >
+        </div>
+      </ng-template>
+    </div>
+
+    <!-- Hamburger Menu Icon (Mobile Only) -->
+    <div class="md:hidden flex items-center">
+      <mat-icon (click)="toggleMenu()" class="cursor-pointer">menu</mat-icon>
+    </div>
+  </div>
+
+  <!-- Mobile Search Bar (Initially hidden) -->
+  <div *ngIf="showSearch && isMobile" class="w-full bg-white shadow-md p-4">
+    <input
+      type="text"
+      placeholder="Search products..."
+      [(ngModel)]="searchTerm"
+      (keyup.enter)="searchProduct($event)"
+      class="w-full p-2 bg-gray-100 text-primary focus:outline-none focus:bg-opacity-80 rounded-md"
+      aria-label="Search"
+    />
+  </div>
+
+  <!-- Mobile Menu -->
+  <div *ngIf="showMenu" class="md:hidden bg-white shadow-lg p-4">
+    <a routerLink="/" class="block py-2">Home</a>
+    <a routerLink="/wishlist" class="block py-2">Wishlist</a>
+    <a routerLink="/cart" class="block py-2">Cart</a>
+    <a *ngIf="authService.isLoggedIn" (click)="onLogout()" class="block py-2">Logout</a>
+    <a *ngIf="!authService.isLoggedIn" routerLink="/login" class="block py-2">Log in</a>
+  </div>
+</header>

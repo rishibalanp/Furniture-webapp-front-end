@@ -6,6 +6,10 @@ module.exports = {
       fontFamily: {
         jost: ['Jost', 'sans-serif'],
       },
+      colors: {
+        primary: '#531800',
+        secondary: '#b0784c',
+      },
     },
   },
   plugins: [],

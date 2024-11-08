@@ -1,7 +1,16 @@
-<div class="flex flex-col">
-    <app-header></app-header>
-    <div class="min-h-screen">
-        <router-outlet></router-outlet>
+<div class="flex flex-col min-h-screen">
+    <!-- Header -->
+    <div>
+      <app-header></app-header>
     </div>
-    <app-footer></app-footer>
-</div>
+  
+    <!-- Main Content with responsive top padding to prevent overlap -->
+    <div class="flex-grow pt-16 sm:pt-20 md:pt-24 lg:pt-26 home">
+      <router-outlet></router-outlet>
+    </div>
+  
+    <!-- Footer -->
+    <div>
+      <app-footer></app-footer>
+    </div>
+  </div>

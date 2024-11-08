@@ -6,10 +6,11 @@ import { ProductCardComponent } from '../product-card/product-card.component';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { WishlistService } from '../../services/wishlist.service';
 import { CartService } from '../../services/cart.service';
+import { CommonModule } from '@angular/common';
 @Component({
 	selector: 'app-home',
 	standalone: true,
-	imports: [RouterLink,ProductCardComponent,CarouselModule,RouterLink],
+	imports: [RouterLink,ProductCardComponent,CarouselModule,RouterLink,CommonModule],
 	templateUrl: './home.component.html',
 	styleUrl: './home.component.scss'
 })

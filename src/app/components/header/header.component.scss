@@ -1,142 +1,15 @@
-// Colors and variables
-$primary-color: #00bdc4;
-$secondary-color: #009689;
-$button-hover-color: darken($primary-color, 10%);
-$input-bg: #f3f4f6;
-$text-color: #fff;
-$link-hover-color: #d4d4d8;
 
-.header {
-	background: linear-gradient(45deg, $secondary-color, $secondary-color);
-	padding: 1rem 1rem 0.5rem 1rem;
 
-	.logo {
-		&__text {
-			font-size: 2rem;
-			color: $text-color;
-			font-weight: 200;
-			text-transform: uppercase;
-			letter-spacing: 2px;
-			// font-family: "Kanit", sans-serif;
-			font-style: normal;
-		}
-	}
+.scrolled {
+	padding-top: 0.5rem; 
+	padding-bottom: 0.5rem;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
 
-	.search-bar {
-		width: 50%;
-		position: relative;
-
-		&__input {
-			width: 100%;
-			padding: 0.75rem 1rem;
-			border-radius: 50px;
-			border: none;
-			background-color: $input-bg;
-			font-size: 1rem;
-			transition: box-shadow 0.3s ease;
-				// font-family: "Kanit", sans-serif;
-
-			&:focus {
-				outline: none;
-				box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-			}
-		}
-
-		&__button {
-			position: absolute;
-			right: 0;
-			top: 0;
-			bottom: 0;
-			padding: 0 1rem;
-			background-color: $secondary-color;
-			border: none;
-			border-radius: 50px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			cursor: pointer;
-			transition: background-color 0.3s ease;
-
-			&:hover {
-				background-color: $button-hover-color;
-			}
-
-			&__icon {
-				width: 20px;
-				height: 20px;
-				color: $text-color;
-			}
-		}
-	}
-
-	.header__links {
-		width: 20%;
-		display: flex;
-		align-items: center;
-
-		.header__link {
-			color: $text-color;
-			font-weight: 500;
-			margin-left: 1.5rem;
-			text-decoration: none;
-			position: relative;
-			transition: color 0.3s ease;
-
-			&:hover {
-				color: $link-hover-color;
-			}
-		}
-	}
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10; 
 }
-
-
-.nav-header{
-	background-color: white;
-	nav {
-		display: flex;
-		justify-content: center; 
-		align-items: center; 
-		}
-	
-		ul {
-			list-style: none; 
-			display: flex; 
-			justify-content: center; 
-			padding: 0;
-			margin: 0;
-		}
-	
-		li {
-			margin: 0 20px; 
-			font-size: 0.75rem; 
-			color: black; 
-			cursor: pointer; 
-			font-weight: 500;
-			font-style: normal;
-			text-transform:uppercase;
-			transition: color 0.3s; 
-	
-			&:hover {
-				color: $primary-color; 
-			}
-		}
-}
-
-
-
-	.user-icon{
-		display: contents;
-	}
-	.user-name{
-		font-size: 0.75rem;
-			text-transform: uppercase;
-			color: white;
-	}
-
-	.log-register{
-		font-size: 0.75rem;
-			text-transform: uppercase;
-			color: white;
-			margin-right: 1.5rem;
-	}
-

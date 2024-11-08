@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit,HostListener  } from '@angular/core';
 import { category } from '../../types/category';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -8,8 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
-import { of,interval,Subject } from 'rxjs';
-import { switchMap, catchError, retry, takeUntil } from 'rxjs/operators';
+
 
 @Component({
 	selector: 'app-header',
@@ -18,56 +17,67 @@ import { switchMap, catchError, retry, takeUntil } from 'rxjs/operators';
 	templateUrl: './header.component.html',
 	styleUrl: './header.component.scss'
 })
-export class HeaderComponent implements OnInit,OnDestroy{
+export class HeaderComponent implements OnInit{
+	// isScrolled = false;
 
-private destroy$ = new Subject<void>();
+	// @HostListener('window:scroll', [])
+	// onWindowScroll() {
+	//   const offset = window.scrollY;
+	//   this.isScrolled = offset > 50; // Adjust the scroll threshold as needed
+	// }
+
 customerService = inject(CustomerService);
 categoryList: category[]=[];
 router = inject(Router);
 authService = inject(AuthService);
 searchTerm!:string;
+isScrolled = false;
+  showSearch = true; // Default to show on desktop
+  showMenu = false;
+  isMobile = false;
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    this.isScrolled = window.scrollY > 50;
+  }
+
+
+  @HostListener('window:resize', [])
+  onResize() {
+    this.updateViewMode();
+  }
+  private updateViewMode() {
+    this.isMobile = window.innerWidth < 768;
+    if (this.isMobile) {
+      this.showSearch = false;
+    } else {
+      this.showSearch = true;
+    }
+  }
+
+  toggleSearchBar() {
+    if (this.isMobile) {
+      this.showSearch = !this.showSearch;
+    }
+  }
+
+  toggleMenu() {
+    this.showMenu = !this.showMenu;
+  }
 
 ngOnInit(): void {
-	const pollingInterval = 2000; 
-interval(pollingInterval).pipe(
-	switchMap(() => {
-	  if (this.authService.isLoggedIn) {
-		if (this.categoryList.length === 0) {
-		  return this.customerService.getCategory().pipe(
-			retry(2), 
-			catchError((error) => {
-			  if (error.status === 401) {
-				console.error('Unauthorized access');
-				this.router.navigateByUrl('/login');
-			  }
-			  return of([]);
-			})
-		  );
-		}
-	  }
-	  return of([]);
-	}),
-	takeUntil(this.destroy$) 
-  ).subscribe(
-	(res) => {
-	  if (res && res.length > 0) {
-		this.categoryList = res;
-	  }
-	}
-  );
+	this.updateViewMode();
 }
 
 searchProduct(event:any){
-	console.log(event.target.value);
 	if(event.target.value){
 		this.router.navigateByUrl("/product?search="+event.target.value);
+		if (this.isMobile) {
+			this.showSearch = false;
+		  }
 	}
 }
 
-searchCategory(id:string){
-	this.searchTerm = "";
-	this.router.navigateByUrl("/product?categoryId="+id);
-}
+
 
 onProfile() {
 	this.router.navigateByUrl("/profile");
@@ -77,8 +87,5 @@ onLogout() {
 	this.authService.logout();
 	this.router.navigateByUrl("/login");
 }
-ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
+
 }

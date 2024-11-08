@@ -16,7 +16,7 @@ FooterComponent
 	styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit{
-	wishlistService = inject(WishlistService);
+wishlistService = inject(WishlistService);
 cartService = inject(CartService);
 	ngOnInit() {
 		this.wishlistService.init();
