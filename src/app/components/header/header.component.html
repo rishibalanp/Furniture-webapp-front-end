@@ -19,7 +19,7 @@
 
     <!-- Desktop Search Bar -->
     <div
-      class="flex-grow max-w-md mx-4"
+    class="flex-grow max-w-xl mx-4 border border-black-700"
       [ngClass]="{'hidden': isMobile, 'md:flex': true}"
     >
       <input
@@ -27,7 +27,7 @@
         placeholder="Search products..."
         [(ngModel)]="searchTerm"
         (keyup.enter)="searchProduct($event)"
-        class="w-full p-2 bg-gray-100 text-primary focus:outline-none focus:bg-opacity-80 rounded-md"
+        class="w-full p-2  text-primary focus:outline-none focus:bg-opacity-80"
         aria-label="Search"
       />
     </div>
@@ -102,13 +102,13 @@
   </div>
 
   <!-- Mobile Search Bar (Initially hidden) -->
-  <div *ngIf="showSearch && isMobile" class="w-full bg-white shadow-md p-4">
+  <div *ngIf="showSearch && isMobile" class="w-full bg-white shadow-md p-4 ">
     <input
       type="text"
       placeholder="Search products..."
       [(ngModel)]="searchTerm"
       (keyup.enter)="searchProduct($event)"
-      class="w-full p-2 bg-gray-100 text-primary focus:outline-none focus:bg-opacity-80 rounded-md"
+      class="w-full p-2  text-primary focus:outline-none focus:bg-opacity-80 border border-black-700"
       aria-label="Search"
     />
   </div>

@@ -1,0 +1,187 @@
+<div class="max-w-4xl mx-auto p-6 bg-gray-100 rounded-lg shadow-lg mt-10">
+  <h2 class="text-2xl font-bold mb-6 text-primary text-left">Order Address</h2>
+
+  <div class="flex flex-col lg:flex-row gap-6">
+    <div class="lg:w-2/3">
+      <div>
+        @if (userAddress.length) {
+          @for (address of userAddress; track $index) {
+            <div class="bg-white p-4 rounded-lg shadow mb-4">
+              <p class="text-lg">
+                {{ address.street1 }}, {{ address.city }}, {{ address.state }}
+              </p>
+              <p
+                *ngIf="address.primaryAddress"
+                class="text-sm text-green-600 font-semibold"
+              >
+                Shipping Address
+              </p>
+              <div class="flex justify-end space-x-4 mt-4">
+                <button *ngIf="!address.primaryAddress"
+                  class="text-green-600 hover:text-secondary"
+                  (click)="makeprimary(address)"
+                >
+                  Choose address
+                </button>
+                <button
+                  class="text-blue-500 hover:text-secondary"
+                  (click)="editAddress(address)"
+                >
+                  Edit
+                </button>
+                <button
+                  class="text-red-500 hover:text-secondary"
+                  (click)="deleteAddress(address._id!)"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          }
+        } @else {
+          <p>No address found</p>
+        }
+      </div>
+
+      @if (addressFormControl) {
+        <div class="bg-white p-6 rounded-lg shadow mt-6">
+          <div class="text-2xl font-bold mb-6 text-primary">Add Address</div>
+          <form [formGroup]="addressForm">
+            <div class="space-y-6">
+              <div class="input-box form-group">
+                <label>Street1</label>
+                <input
+                  type="text"
+                  formControlName="street1"
+                  required
+                  class="form-control w-full p-2 border border-gray-300 rounded-md"
+                />
+              </div>
+              <div class="input-box form-group">
+                <label>Street2</label>
+                <input
+                  type="text"
+                  formControlName="street2"
+                  required
+                  class="form-control w-full p-2 border border-gray-300 rounded-md"
+                />
+              </div>
+              <div class="input-box form-group">
+                <label>City</label>
+                <input
+                  type="text"
+                  formControlName="city"
+                  required
+                  class="form-control w-full p-2 border border-gray-300 rounded-md"
+                />
+              </div>
+              <div class="input-box form-group">
+                <label>State</label>
+                <input
+                  type="text"
+                  formControlName="state"
+                  required
+                  class="form-control w-full p-2 border border-gray-300 rounded-md"
+                />
+              </div>
+              <div class="input-box form-group">
+                <label>Pincode</label>
+                <input
+                  type="text"
+                  formControlName="pincode"
+                  required
+                  class="form-control w-full p-2 border border-gray-300 rounded-md"
+                />
+              </div>
+
+              <!-- Checkbox for primaryAddress -->
+              <div class="input-box form-group flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  formControlName="primaryAddress"
+                  class="form-control"
+                />
+                <label>Set as Primary Address</label>
+              </div>
+
+              <!-- Save or Update Address Buttons -->
+              <div class="flex justify-end space-x-4 mt-4">
+                @if (editValue) {
+                  <button
+                    class="bg-primary text-white py-2 px-6 font-semibold hover:bg-secondary"
+                    (click)="UpdateAddress()"
+                  >
+                    Update Address
+                  </button>
+                } @else {
+                  <button
+                    class="bg-primary text-white py-2 px-6 font-semibold hover:bg-secondary"
+                    (click)="addAddress()"
+                  >
+                    Save Address
+                  </button>
+                }
+                <button
+                  class="bg-gray-300 text-gray-700 py-2 px-6 font-semibold hover:bg-gray-400"
+                  (click)="addNewAddress()"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      }
+
+      @if (!addressFormControl) {
+        <div class="flex justify-end mb-4">
+          <button
+            class="bg-primary text-white py-2 px-6 font-semibold hover:bg-secondary"
+            (click)="addNewAddress()"
+          >
+            Add New Address
+          </button>
+        </div>
+      }
+    </div>
+
+    <!-- Right Column (Cart Total) -->
+    <div class="lg:w-1/3 mt-6 lg:mt-0 sticky top-20 lg:top-6 ml-auto">
+      <div class="bg-white p-4 shadow">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-lg font-semibold text-gray-800">Cart Total</h3>
+        </div>
+        <div class="text-lg text-gray-700 mb-4">
+          <div class="flex justify-between mb-2">
+            <span>Subtotal:</span>
+            <span>₹{{ totalAmount }}</span>
+          </div>
+          <div class="flex justify-between mb-2">
+            <span>Shipping:</span>
+            <span>₹500</span>
+          </div>
+
+          @if (primaryAddress) {
+            <div>
+              <p class="text-sm text-gray-500 mb-4">
+                Shipping to {{ primaryAddress.city! }},
+                {{ primaryAddress.state! }}
+              </p>
+            </div>
+          }
+
+          <div class="flex justify-between text-xl font-bold mt-4">
+            <span>Total:</span>
+            <span>₹{{ totalAmount + 500 }}</span>
+          </div>
+        </div>
+        <button
+          (click)="cartPage()"
+          class="w-full bg-primary text-white py-2 font-semibold hover:bg-secondary"
+        >
+          Go to Cart
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+
+
+  <div class="max-w-3xl mx-auto p-6 bg-gray-100 rounded-lg shadow-lg mt-10">
+    <div>
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">Select Payment Method</h2>
+    
+        <mat-radio-group aria-label="Select an option" [(ngModel)]="paymentType">
+          <mat-radio-button value="cash">CASH</mat-radio-button>
+          <mat-radio-button value="card">CARD</mat-radio-button>
+          <mat-radio-button value="net_banking">NET BANKING</mat-radio-button>
+          <mat-radio-button value="upi">UPI</mat-radio-button>
+        </mat-radio-group>
+    
+        <button class="mt-4 w-full  text-white py-2 rounded-lg font-semibold" (click)="completeOrder()">Continue</button>
+      </div>
+    
+  </div>

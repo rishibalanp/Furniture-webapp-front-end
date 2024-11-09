@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Product } from '../types/product';
 import { environment } from '../../environments/environment';
 import { category } from '../types/category';
+import { Address } from '../types/addresss';
 
 @Injectable({
 	providedIn: 'root'
@@ -33,4 +34,22 @@ getProductById(id:string){
 }
 
 
+getAddress(){
+	return this.http.get<{ addresses: Address[] }>(environment.apiUrl+'/customer/getaddresses');
+}
+
+
+addAddress(address:any){
+	return this.http.post(environment.apiUrl+'/customer/addaddress',address);
+}
+updateAddress(addressId:string,address:any){
+	return this.http.put(environment.apiUrl+'/customer/updateaddress/'+addressId,{
+		address
+	});
+}
+
+
+deleteAddress(addressId:string){
+	return this.http.delete(environment.apiUrl + '/customer/removeaddress/' + addressId);
+}
 }

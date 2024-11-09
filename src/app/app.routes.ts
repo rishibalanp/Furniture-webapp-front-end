@@ -18,6 +18,8 @@ import { CustomerOrderComponent } from './components/customer-order/customer-ord
 import { OrdersComponent } from './components/manage/orders/orders.component';
 import { SubCategoryComponent } from './components/manage/sub-category/sub-category.component';
 import { SubCategoryFormComponent } from './components/manage/sub-category-form/sub-category-form.component';
+import { AddresspageComponent } from './components/addresspage/addresspage.component';
+import { CheckoutpageComponent } from './components/checkoutpage/checkoutpage.component';
 
 export const routes: Routes = [
 	{
@@ -116,6 +118,16 @@ export const routes: Routes = [
 	{
 		path: "order",
 		component: CustomerOrderComponent,
+		canActivate:[authGuard]
+	},
+	{
+		path: "address",
+		component: AddresspageComponent,
+		canActivate:[authGuard]
+	},
+	{
+		path: "checkout",
+		component: CheckoutpageComponent,
 		canActivate:[authGuard]
 	},{
 		path: "register",
