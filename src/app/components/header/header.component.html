@@ -1,33 +1,31 @@
 <header
-  [ngClass]="{ 'scrolled': isScrolled }"
+  [ngClass]="{ scrolled: isScrolled }"
   class="fixed top-0 w-full bg-white text-gray-800 shadow-md z-10 transition-all duration-300"
 >
   <div class="container mx-auto flex items-center justify-between py-4 px-6">
     <!-- Logo Section -->
-    <div class="flex items-center space-x-2">
-      <span
-        class="text-primary text-xl font-semibold hover:text-secondary transition-colors duration-200"
-        [routerLink]="'/'"
-        >YourWebsite</span
-      >
+    <div class="flex items-center space-x-2 p-2">
+      <img [routerLink]="'/'" src="assets/logo/luxicon.png" alt="Luxicon Logo" class="h-auto max-h-10" />
     </div>
 
     <!-- Search Icon (Mobile Only) -->
     <div class="flex md:hidden">
-      <mat-icon (click)="toggleSearchBar()" class="cursor-pointer">search</mat-icon>
+      <mat-icon (click)="toggleSearchBar()" class="cursor-pointer"
+        >search</mat-icon
+      >
     </div>
 
     <!-- Desktop Search Bar -->
     <div
-    class="flex-grow max-w-xl mx-4 border border-black-700"
-      [ngClass]="{'hidden': isMobile, 'md:flex': true}"
+      class="flex-grow max-w-xl mx-4 border border-black-700"
+      [ngClass]="{ hidden: isMobile, 'md:flex': true }"
     >
       <input
         type="text"
         placeholder="Search products..."
         [(ngModel)]="searchTerm"
         (keyup.enter)="searchProduct($event)"
-        class="w-full p-2  text-primary focus:outline-none focus:bg-opacity-80"
+        class="w-full p-2 text-primary focus:outline-none focus:bg-opacity-80"
         aria-label="Search"
       />
     </div>
@@ -53,7 +51,13 @@
 
         <mat-menu #menu="matMenu">
           <button mat-menu-item (click)="onProfile()">Profile Detail</button>
-          <button *ngIf="!authService.isAdmin" mat-menu-item routerLink="/order">Orders</button>
+          <button
+            *ngIf="!authService.isAdmin"
+            mat-menu-item
+            routerLink="/order"
+          >
+            Orders
+          </button>
           <button mat-menu-item (click)="onLogout()">Logout</button>
         </mat-menu>
 
@@ -84,13 +88,15 @@
           <div
             class="cursor-pointer text-primary hover:text-secondary transition-colors duration-200"
             routerLink="/login"
-            >Log in</div
           >
+            Log in
+          </div>
           <div
             class="cursor-pointer text-primary hover:text-secondary transition-colors duration-200"
             routerLink="/register"
-            >Register</div
           >
+            Register
+          </div>
         </div>
       </ng-template>
     </div>
@@ -102,13 +108,13 @@
   </div>
 
   <!-- Mobile Search Bar (Initially hidden) -->
-  <div *ngIf="showSearch && isMobile" class="w-full bg-white shadow-md p-4 ">
+  <div *ngIf="showSearch && isMobile" class="w-full bg-white shadow-md p-4">
     <input
       type="text"
       placeholder="Search products..."
       [(ngModel)]="searchTerm"
       (keyup.enter)="searchProduct($event)"
-      class="w-full p-2  text-primary focus:outline-none focus:bg-opacity-80 border border-black-700"
+      class="w-full p-2 text-primary focus:outline-none focus:bg-opacity-80 border border-black-700"
       aria-label="Search"
     />
   </div>
@@ -118,7 +124,11 @@
     <a routerLink="/" class="block py-2">Home</a>
     <a routerLink="/wishlist" class="block py-2">Wishlist</a>
     <a routerLink="/cart" class="block py-2">Cart</a>
-    <a *ngIf="authService.isLoggedIn" (click)="onLogout()" class="block py-2">Logout</a>
-    <a *ngIf="!authService.isLoggedIn" routerLink="/login" class="block py-2">Log in</a>
+    <a *ngIf="authService.isLoggedIn" (click)="onLogout()" class="block py-2"
+      >Logout</a
+    >
+    <a *ngIf="!authService.isLoggedIn" routerLink="/login" class="block py-2"
+      >Log in</a
+    >
   </div>
 </header>
