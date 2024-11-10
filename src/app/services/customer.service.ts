@@ -23,6 +23,9 @@ getFeaturedProducts(){
 getCategory(){
 		return this.http.get<category[]>(environment.apiUrl+'/customer/categories')
 }
+getsubCategory(){
+		return this.http.get<category[]>(environment.apiUrl+'/customer/subcategories')
+}
 
 getSearchProduct(searchTerm: string,categoryId:string,page:Number,pageSize:number, sortBy:string,sortOrder:number){
 	console.log(environment.apiUrl+`/customer/products?searchTerm=${searchTerm}&categoryId=${categoryId}&page=${page}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}`);

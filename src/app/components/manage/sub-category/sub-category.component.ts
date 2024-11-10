@@ -38,7 +38,6 @@ export class SubCategoryComponent implements AfterViewInit,OnInit{
 
 	private getAllCategory() {
 		this.subCategoryService.getCategory().subscribe((result) => {
-			console.log(result,'ihdihfkidhfvdibfd');
 			this.dataSource.data = result;
 		});
 	}

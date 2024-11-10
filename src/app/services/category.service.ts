@@ -22,14 +22,16 @@ export class CategoryService {
     return this.http.delete(environment.apiUrl + '/category/' + id);
   }
 
-  addCategory(name: string) {
+  addCategory(name: string,iconUrl:string) {
     return this.http.post(environment.apiUrl + '/category', {
       name: name,
+      iconUrl:iconUrl
     });
   }
-  updateCategory(id: string, name: string) {
+  updateCategory(id: string, name: string,iconUrl:string) {
     return this.http.put(environment.apiUrl + '/category/' + id, {
       name: name,
+      iconUrl:iconUrl
     });
   }
 }

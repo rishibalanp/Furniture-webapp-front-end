@@ -13,6 +13,35 @@
     </owl-carousel-o>
   </div>
 
+ <div class="grid grid-cols-4 md:grid-cols-8 gap-4 relative">
+    <div *ngFor="let category of categoryList; let i = index" 
+         class="category-container text-center"
+         (mouseenter)="showSubcategories(category._id)"
+         (mouseleave)="hideSubcategories()">
+         
+      <img [src]="category.iconUrl" 
+           class="categoryImage cursor-pointer mx-auto h-5 md:h-20" 
+           alt="{{category.name}}">
+      <div class="font-semibold mt-2 mb-2 cursor-pointer" 
+           (click)="searchCategory(category._id)">
+        {{ category.name }}
+      </div>
+  
+
+      <div *ngIf="visibleCategory === category._id" 
+           class="subcategory-dropdown"
+           (mouseenter)="showSubcategories(category._id)"
+           (mouseleave)="hideSubcategories()">
+           
+        <div *ngFor="let subcategory of getSubcategoriesByCategory(category._id)" 
+             class="subcategory-item py-1 px-2"
+             >
+          {{ subcategory.name }}
+        </div>
+      </div>
+    </div>
+  </div> 
+
   <!-- Featured Products Section -->
   <div class="my-20">
     <h4 class="text-2xl font-semibold text-primary mb-4 text-center">Featured Products</h4>

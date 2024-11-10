@@ -36,7 +36,7 @@ export class ProductCardComponent {
 
   inWishlist(product: Product) {
     let isWishlistAvailable = this.wishlistService.wishlist.find(
-      (x) => x._id === product._id,
+      (x) => x?._id === product._id,
     );
     return isWishlistAvailable ? true : false;
   }
@@ -53,7 +53,7 @@ export class ProductCardComponent {
     }
   }
   inCart(productId: string) {
-    if (this.cartService.cartItems.find((x) => x.product._id == productId)) {
+    if (this.cartService.cartItems.find((x) => x.product?._id == productId)) {
       return true;
     } else {
       return false;
