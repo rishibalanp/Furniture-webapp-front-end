@@ -1,26 +1,63 @@
-<div class="product-card cursor-pointer">
-    <img [src]="product.images[0]" alt="Product Image" [routerLink]="'/product/'+product._id"/>
-    <button mat-mini-fab class="favorite-icon" color="white" (click)="addWishlist(product)">
-      @if(inWishlist(product)){
-        <mat-icon class="text-red-500">favorite</mat-icon>
-      }@else {
-        <mat-icon class="text-red-500">favorite_border</mat-icon>
-      }
-    </button>
-    <div class="product-info">
-      <h3 [routerLink]="'/product/'+product._id">{{product.name}}</h3>
-      <p [routerLink]="'/product/'+product._id">{{product.shortDescription}}</p>
-      <div [routerLink]="'/product/'+product._id" class="text-2l font-bold mb-2 text-gray-800"><span class="mr-2">₹{{sellingPrice}}</span><span class="line-through text-gray-500"><s>₹{{product.price}}</s></span> <span class="text-green-600 px-4">{{product.discount}}% off</span></div>
-      <div>
-       
-        <button mat-mini-fab (click)="addToCart(product)">
-          @if(inCart(product._id!)){
-            <mat-icon>remove_shopping_cart</mat-icon>
-          }@else {
-            <mat-icon>add_shopping_cart</mat-icon>
-          }
-        </button>
-      </div>
-   
+<div class="product-card cursor-pointer w-full sm:w-60 md:w-56 lg:w-72 bg-white shadow-md rounded-md overflow-hidden mx-1 mb-4">
+  <!-- Product Image with transition effect -->
+  <img
+    [src]="product.images[0]"
+    alt="Product Image"
+    [routerLink]="'/product/'+product._id"
+    class="w-full h-36 sm:h-48 lg:h-52 object-cover transition-transform duration-500 ease-in-out hover:scale-110"
+  />
+
+  <!-- Product Information with Add to Cart and Favorite Buttons in a Row -->
+  <div class="product-info p-2 text-center">
+    <h3
+      [routerLink]="'/product/'+product._id"
+      class="sm:text-base productname text-primary uppercase mb-1 truncate"
+      style="max-height: 2em; line-height: 1em; overflow: hidden;"
+    >
+      {{product.name}}
+    </h3>
+    <p
+      [routerLink]="'/product/'+product._id"
+      class="text-xs sm:text-sm text-gray-600 capitalize mb-1 line-clamp-2"
+      style="max-height: 2em; overflow: hidden;"
+    >
+      {{product.shortDescription}}
+    </p>
+    <div
+      [routerLink]="'/product/'+product._id"
+      class="text-xs sm:text-sm font-bold text-gray-800 mb-1"
+    >
+      <span class="mr-1">₹{{sellingPrice}}</span>
+      <span class="line-through text-gray-500 text-xs">₹{{product.price}}</span>
+      <span class="text-green-600 ml-1 text-xs">{{product.discount}}% off</span>
+    </div>
+
+    <!-- Row layout for Add to Cart and Favorite Icon buttons -->
+    <div class="flex items-center justify-center space-x-1">
+      <!-- Add to Cart Button -->
+      <button
+        (click)="addToCart(product)"
+        class="px-2 py-1 bg-pink-500 text-white font-semibold rounded-full flex items-center justify-center text-xs"
+      >
+        @if(inCart(product._id!)) {
+          <mat-icon class="">remove_shopping_cart</mat-icon> Remove
+        } @else {
+          <mat-icon class="">add_shopping_cart</mat-icon> Add
+        }
+      </button>
+
+      <!-- Favorite Icon Button -->
+      <button
+        mat-mini-fab
+        class="text-primary bg-none p-1 bg-pink-500 rounded-full shadow-lg"
+        (click)="addWishlist(product)"
+      >
+        @if(inWishlist(product)) {
+          <mat-icon class="">favorite</mat-icon>
+        } @else {
+          <mat-icon class="">favorite_border</mat-icon>
+        }
+      </button>
     </div>
   </div>
+</div>

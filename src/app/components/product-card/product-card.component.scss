@@ -1,78 +1,80 @@
-$primary-color: #00bdc4;
-$secondary-color: #009689;
-$product-card-bg: #fff;
-$cardprimary-color: #3498db;
-$shadow-color: rgba(0, 0, 0, 0.1);
-$hover-shadow-color: rgba(0, 0, 0, 0.3);
+$primary-color: #531800;
 
+button {
+  color: $primary-color;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  font-size: 1rem;// Lighten the border by reducing opacity
+}
 
+/* General Styles */
 .product-card {
-	width: 300px;
-	background-color: $product-card-bg;
-	overflow: hidden;
-	position: relative;
-
-	img {
-		width: 100%;
-		height: 200px;
-		object-fit: cover;
-		transition: transform 0.6s ease-in-out;
-	}
-
-	&:hover img {
-		transform: scaleX(-1);
-	}
-	.product-info {
-		padding: 15px;
-		text-align: center;
-
-		h3 {
-			font-size: 1.2rem;
-			color: $secondary-color;
-			margin-bottom: 10px;
-		}
-
-		.price {
-			font-size: 1.1rem;
-			color: $primary-color;
-			margin-bottom: 15px;
-		}
-
-		.btn {
-			display: inline-block;
-			padding: 10px 20px;
-			background-color: $primary-color;
-			color: #fff;
-			border-radius: 5px;
-			text-transform: uppercase;
-			font-weight: bold;
-			text-decoration: none;
-		}
-	}
-
-	.favorite-icon {
-		position: absolute;
-		top: 10px;
-		right: 10px;
-		z-index: 1;
-		transition: background-color 0.3s ease, transform 0.3s ease;
-	}
-
-	/* Hover effect */
-	.favorite-icon:hover {
-		background-color: darken(rgb(255, 249, 252), 10%); /* Darker color on hover */
-		transform: scale(1.1); /* Slightly increase size */
-	}
-
-
-
-	}
-
-	.addtocart{
-		border-radius: 50px;
-		background-color: $primary-color !important;
-		color: white !important;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 
+.productname{
+	font-weight: 600;
+}
+/* Desktop View Adjustments */
+@media (min-width: 769px) {
+  .product-card {
+    height: 360px; /* Adjusted height for desktop */
+  }
 
+  .product-info {
+    padding: 10px;
+  }
+
+  .product-info h3 {
+    font-size: 0.75rem;
+    line-height: 1.2;
+  }
+
+  .product-info p {
+    font-size: 0.85rem;
+    line-height: 1.1;
+    max-height: 3.3em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  button{
+	font-size: 0.75rem;
+  }
+
+}
+
+/* Mobile View Adjustments */
+@media (max-width: 768px) {
+  .product-card {
+    height: auto;
+  }
+
+  .product-info {
+    padding: 8px;
+  }
+
+  .product-info h3 {
+    font-size: 0.9rem;
+    line-height: 1.1;
+  }
+
+  .product-info p {
+    font-size: 0.75rem;
+    line-height: 1.1;
+    max-height: 3em;
+  }
+
+  .flex.items-center .btn-add-to-cart,
+  .flex.items-center .btn-wishlist {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+  }
+
+  button{
+	font-size: 0.5rem;
+  }
+}

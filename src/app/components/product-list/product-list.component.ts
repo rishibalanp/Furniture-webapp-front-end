@@ -23,6 +23,7 @@ export class ProductListComponent implements OnInit {
 customerService = inject(CustomerService);
 searchTerm:string = '';
 categoryId:string ='';
+subCategoryId:string ='';
 sortBy:string = '';
 sortOrder:number = -1;
 page = 1;
@@ -36,20 +37,19 @@ category : category[]=[];
 
 	ngOnInit(): void {
 		this.route.queryParams.subscribe((result: any)=>{
-			console.log(result,'queryparams')
 			this.searchTerm = result.search || '';
 			this.categoryId = result.categoryId || '';
+			this.subCategoryId = result.subCategoryId || '';
 			this.getProducts();
 		});
 		this.customerService.getCategory().subscribe((result:any)=>{
 			this.category = result;
-			console.log(this.category,'this.category')
 		});
 	}
 
 	getProducts(){
 		setTimeout(()=>{
-			this.customerService.getSearchProduct(this.searchTerm, this.categoryId,this.page,this.pageSize,this.sortBy, this.sortOrder).subscribe(result =>{
+			this.customerService.getSearchProduct(this.searchTerm, this.categoryId,this.page,this.pageSize,this.sortBy, this.sortOrder,this.subCategoryId).subscribe(result =>{
 				this.products = result;
 				console.log(this.products,'this.products')
 			});

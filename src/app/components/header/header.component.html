@@ -122,6 +122,33 @@
   <!-- Mobile Menu -->
   <div *ngIf="showMenu" class="md:hidden bg-white shadow-lg p-4">
     <a routerLink="/" class="block py-2">Home</a>
+
+    <div *ngFor="let category of categoryList">
+      <!-- Category Name with Click Event to Toggle Subcategories -->
+      <div
+        (click)="toggleCategory(category._id)"
+        class="block py-2 font-medium cursor-pointer text-primary hover:text-secondary transition-colors duration-200 flex justify-between items-center"
+      >
+        {{ category.name }}
+        <mat-icon *ngIf="selectedCategoryId === category._id">expand_less</mat-icon>
+        <mat-icon *ngIf="selectedCategoryId !== category._id">expand_more</mat-icon>
+      </div>
+  
+      <!-- Subcategory List (Shown only if category is selected) -->
+      <div *ngIf="selectedCategoryId === category._id" class="pl-4">
+        <a
+          *ngFor="let subcategory of subCategoryList[category._id]"
+          routerLink="/subcategory/{{ subcategory._id }}"
+          class="block py-1 text-gray-600 hover:text-primary transition-colors duration-200"
+          (click)="searchSubCategory(subcategory._id)"
+        >
+          {{ subcategory.name }}
+        </a>
+      </div>
+    </div>
+
+
+
     <a routerLink="/wishlist" class="block py-2">Wishlist</a>
     <a routerLink="/cart" class="block py-2">Cart</a>
     <a *ngIf="authService.isLoggedIn" (click)="onLogout()" class="block py-2"

@@ -38,7 +38,7 @@ export class ProductDetailComponent implements OnInit {
       this.product = result;
       this.mainImage = this.product.images[0];
       this.customerService
-        .getSearchProduct('', this.product.categoryId, 1, 4, '', -1)
+        .getSearchProduct('', this.product.categoryId, 1, 4, '', -1,'')
         .subscribe((result) => {
           this.similarProducts = result;
         });

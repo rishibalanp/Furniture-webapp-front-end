@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
+import { subCategory } from '../../types/subcategory';
 
 
 @Component({
@@ -18,16 +19,11 @@ import { FormsModule } from '@angular/forms';
 	styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit{
-	// isScrolled = false;
 
-	// @HostListener('window:scroll', [])
-	// onWindowScroll() {
-	//   const offset = window.scrollY;
-	//   this.isScrolled = offset > 50; // Adjust the scroll threshold as needed
-	// }
 
 customerService = inject(CustomerService);
 categoryList: category[]=[];
+subCategoryList:any;
 router = inject(Router);
 authService = inject(AuthService);
 searchTerm!:string;
@@ -66,6 +62,27 @@ isScrolled = false;
 
 ngOnInit(): void {
 	this.updateViewMode();
+
+  this.customerService.getCategory().subscribe((result) => {
+    this.categoryList = result;
+  });
+
+  this.customerService.getsubCategory().subscribe((result) => {
+    // Organize subcategories by categoryId
+    this.subCategoryList = result.reduce((acc: any , subCategory: any) => {
+      if (!acc[subCategory.categoryId]) {
+        acc[subCategory.categoryId] = [];
+      }
+      acc[subCategory.categoryId].push(subCategory);
+      return acc;
+    }, {});
+  });
+}
+
+selectedCategoryId: string | null = null;
+
+toggleCategory(categoryId: string) {
+  this.selectedCategoryId = this.selectedCategoryId === categoryId ? null : categoryId;
 }
 
 searchProduct(event:any){
@@ -77,6 +94,10 @@ searchProduct(event:any){
 	}
 }
 
+searchSubCategory(id:string){
+  this.router.navigateByUrl('/product?subCategoryId='+id);
+  this.showMenu = !this.showMenu;
+}
 
 
 onProfile() {

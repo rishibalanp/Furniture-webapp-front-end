@@ -31,3 +31,31 @@
   .subcategory-dropdown:hover {
     display: block; 
   }
+
+  .newfeat{
+    font-weight: 800;
+  }
+
+
+//   ::ng-deep .owl-nav .owl-prev,
+// ::ng-deep .owl-nav .owl-next {
+//   position: absolute;
+//   top: 50%;
+//   transform: translateY(-50%);
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// }
+
+// ::ng-deep .owl-nav .owl-prev {
+//   left: 0px; /* Adjust this value to position the button */
+// }
+
+// ::ng-deep .owl-nav .owl-next {
+//   right: 0px; /* Adjust this value to position the button */
+// }
+
+// ::ng-deep .carousel-nav-image {
+//   width: 30px; /* Adjust image size */
+//   height: auto;
+// }

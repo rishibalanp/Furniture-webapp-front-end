@@ -5,60 +5,75 @@
       <ng-container *ngFor="let image of bannerImages; index as i">
         <ng-template carouselSlide>
           <div class="relative flex flex-col items-center" [routerLink]="'product/' + image._id">
-            <img [src]="image.images[0]" alt="image" class="w-full h-auto object-cover">
-            <span class="text-primary hover:text-secondary text-sm sm:text-base md:text-lg">{{ image.name }}</span>
+            <img [src]="image.images[0]" alt="image" class="w-full h-auto object-cover" />
+            <span class="text-xs sm:text-sm md:text-lg text-primary hover:text-secondary uppercase">
+              {{ image.name }}
+            </span>
           </div>
         </ng-template>
       </ng-container>
     </owl-carousel-o>
   </div>
 
- <div class="grid grid-cols-4 md:grid-cols-8 gap-4 relative">
-    <div *ngFor="let category of categoryList; let i = index" 
-         class="category-container text-center"
-         (mouseenter)="showSubcategories(category._id)"
-         (mouseleave)="hideSubcategories()">
-         
-      <img [src]="category.iconUrl" 
-           class="categoryImage cursor-pointer mx-auto h-5 md:h-20" 
-           alt="{{category.name}}">
-      <div class="font-semibold mt-2 mb-2 cursor-pointer" 
-           (click)="searchCategory(category._id)">
+  <!-- Category Grid -->
+  <div class="grid grid-cols-4 md:grid-cols-8 gap-4 relative justify-center">
+    <div
+      *ngFor="let category of categoryList; let i = index"
+      class="category-container text-center"
+      (mouseenter)="showSubcategories(category._id)"
+      (mouseleave)="hideSubcategories()"
+    >
+      <img
+        [src]="category.iconUrl"
+        class="categoryImage cursor-pointer mx-auto h-5 md:h-20"
+        alt="{{ category.name }}"
+      />
+      <div class="font-medium text-xs sm:text-sm md:text-base mt-2 mb-2 cursor-pointer" (click)="searchCategory(category._id)">
         {{ category.name }}
       </div>
-  
 
-      <div *ngIf="visibleCategory === category._id" 
-           class="subcategory-dropdown"
-           (mouseenter)="showSubcategories(category._id)"
-           (mouseleave)="hideSubcategories()">
-           
-        <div *ngFor="let subcategory of getSubcategoriesByCategory(category._id)" 
-             class="subcategory-item py-1 px-2"
-             >
+      <div
+        *ngIf="visibleCategory === category._id"
+        class="subcategory-dropdown"
+        (mouseenter)="showSubcategories(category._id)"
+        (mouseleave)="hideSubcategories()"
+      >
+        <div
+          *ngFor="let subcategory of getSubcategoriesByCategory(category._id)"
+          class="subcategory-item py-1 px-2"
+          (click)="searchSubCategory(subcategory._id)"
+        >
           {{ subcategory.name }}
         </div>
       </div>
     </div>
-  </div> 
+  </div>
 
   <!-- Featured Products Section -->
   <div class="my-20">
-    <h4 class="text-2xl font-semibold text-primary mb-4 text-center">Featured Products</h4>
-    <div class="flex justify-center items-center overflow-x-auto space-x-6">
-      <ng-container *ngFor="let product of featuredProducts; index as i">
-        <app-product-card [product]="product" class="w-64 sm:w-72 md:w-80 flex-shrink-0"> </app-product-card>
-      </ng-container>
+    <h4 class="text-lg newfeat sm:text-xl md:text-2xl text-primary mb-4 text-center uppercase">
+      Featured Products
+    </h4>
+    <div class="flex justify-center">
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <ng-container *ngFor="let product of featuredProducts; index as i">
+          <app-product-card [product]="product" class="w-full"></app-product-card>
+        </ng-container>
+      </div>
     </div>
   </div>
 
   <!-- New Products Section -->
   <div class="my-20">
-    <h4 class="text-2xl font-semibold text-primary mb-4 text-center">New Products</h4>
-    <div class="flex justify-center items-center overflow-x-auto space-x-6">
-      <ng-container *ngFor="let product of newProducts; index as i">
-        <app-product-card [product]="product" class="w-64 sm:w-72 md:w-80 flex-shrink-0"> </app-product-card>
-      </ng-container>
+    <h4 class="text-lg sm:text-xl newfeat md:text-2xl text-primary mb-4 text-center uppercase">
+      New Products
+    </h4>
+    <div class="flex justify-center">
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <ng-container *ngFor="let product of newProducts; index as i">
+          <app-product-card [product]="product" class="w-full"></app-product-card>
+        </ng-container>
+      </div>
     </div>
   </div>
 </div>
