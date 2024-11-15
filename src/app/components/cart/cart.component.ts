@@ -40,7 +40,7 @@ export class CartComponent implements OnInit {
   }
 
   sellingPrice(product: Product) {
-    return Math.round(product.price - (product.price * product.discount) / 100);
+    return Math.round(product?.price - (product?.price * product?.discount) / 100);
   }
 
   addToCart(productId: string, quantity: number) {

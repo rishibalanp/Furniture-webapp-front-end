@@ -4,12 +4,15 @@ import { Product } from '../types/product';
 import { environment } from '../../environments/environment';
 import { category } from '../types/category';
 import { Address } from '../types/addresss';
+import { catchError, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class CustomerService {
-	http = inject(HttpClient)
+	router = inject(Router);
+	http = inject(HttpClient);
 		constructor() { }
 
 getNewProduct(){
@@ -21,10 +24,28 @@ getFeaturedProducts(){
 }
 
 getCategory(){
-		return this.http.get<category[]>(environment.apiUrl+'/customer/categories')
+		return this.http.get<category[]>(environment.apiUrl+'/customer/categories').pipe(
+			catchError((error) => {
+			  if (error.status === 401) {
+				this.router.navigate(['/login']);
+			  } else {
+				console.error('Error fetching categories:', error);
+			  }
+			  return throwError(() => error);
+			})
+		  );
 }
 getsubCategory(){
-		return this.http.get<category[]>(environment.apiUrl+'/customer/subcategories')
+		return this.http.get<category[]>(environment.apiUrl+'/customer/subcategories').pipe(
+			catchError((error) => {
+			  if (error.status === 401) {
+				this.router.navigate(['/login']);
+			  } else {
+				console.error('Error fetching categories:', error);
+			  }
+			  return throwError(() => error);
+			})
+		  );
 }
 
 getSearchProduct(searchTerm: string,categoryId:string,page:Number,pageSize:number, sortBy:string,sortOrder:number,subCategoryId:string){

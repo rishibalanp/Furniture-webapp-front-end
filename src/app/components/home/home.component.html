@@ -1,21 +1,23 @@
-<div class="home px-4 sm:px-6 lg:px-8">
-  <!-- Carousel Section -->
-  <div class="shadow mb-10">
-    <owl-carousel-o [options]="customOptions">
-      <ng-container *ngFor="let image of bannerImages; index as i">
-        <ng-template carouselSlide>
-          <div class="relative flex flex-col items-center" [routerLink]="'product/' + image._id">
-            <img [src]="image.images[0]" alt="image" class="w-full h-auto object-cover" />
-            <span class="text-xs sm:text-sm md:text-lg text-primary hover:text-secondary uppercase">
-              {{ image.name }}
-            </span>
-          </div>
-        </ng-template>
-      </ng-container>
-    </owl-carousel-o>
+<div class="home">
+  <div class="carousel mb-8" (mouseenter)="stopAutoplay()" (mouseleave)="startAutoplay()">
+    <div class="carousel-track" [ngStyle]="{'transform': 'translateX(' + (-currentIndex * 100) + '%)'}">
+      <div class="carousel-slide" *ngFor="let image of images">
+        <img [src]="image" alt="Carousel Image" class="carousel-image" />
+      </div>
+    </div>
+      <button class="carousel-button prev" (click)="prevSlide()">&#10094;</button>
+    <button class="carousel-button next" (click)="nextSlide()">&#10095;</button>
+      <div class="carousel-dots">
+      <span
+        class="dot"
+        *ngFor="let _ of images; let i = index"
+        [class.active]="i === currentIndex"
+        (click)="goToSlide(i)"
+      ></span>
+    </div>
   </div>
+  
 
-  <!-- Category Grid -->
   <div class="grid grid-cols-4 md:grid-cols-8 gap-4 relative justify-center">
     <div
       *ngFor="let category of categoryList; let i = index"

@@ -5,11 +5,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
 import { TYPE } from './../../types/alert';
-import { Router } from '@angular/router';
+import { Router,RouterLink } from '@angular/router';
 @Component({
 	selector: 'app-login',
 	standalone: true,
-	imports: [MatButtonModule,ReactiveFormsModule,CommonModule],
+	imports: [MatButtonModule,ReactiveFormsModule,CommonModule,RouterLink],
 	templateUrl: './login.component.html',
 	styleUrl: './login.component.scss'
 })

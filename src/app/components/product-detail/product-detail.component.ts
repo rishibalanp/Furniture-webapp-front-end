@@ -36,6 +36,7 @@ export class ProductDetailComponent implements OnInit {
   getProductDetails(id: string) {
     this.customerService.getProductById(id).subscribe((result) => {
       this.product = result;
+      console.log(result,'productdetailpage');
       this.mainImage = this.product.images[0];
       this.customerService
         .getSearchProduct('', this.product.categoryId, 1, 4, '', -1,'')

@@ -7,7 +7,7 @@
       @for (item of cartItems; track $index) {
         <div class="bg-white p-4 shadow flex items-center justify-between flex-col lg:flex-row space-y-4 lg:space-y-0">
           <div class="flex items-center w-full lg:w-auto mb-4 lg:mb-0">
-            <img [src]="item.product.images" alt="Product Image" class="w-16 h-16 mr-4" />
+            <img [src]="item.product.images!" alt="Product Image" class="w-16 h-16 mr-4" />
             <div class="flex-1">
               <h3 class="text-xl font-semibold text-gray-700">{{ item.product.name }}</h3>
               <div class="text-xl font-bold mb-2 text-gray-800 flex flex-col sm:flex-row sm:items-center sm:space-x-4">

@@ -33,6 +33,7 @@ route = inject(ActivatedRoute);
 id!:string;
 productService = inject(ProductService);
 category : category[]=[];
+subCategoryList:any;
 
 
 	ngOnInit(): void {
@@ -45,17 +46,39 @@ category : category[]=[];
 		this.customerService.getCategory().subscribe((result:any)=>{
 			this.category = result;
 		});
+		
+		this.customerService.getsubCategory().subscribe((result:any) => {
+			let data = result;
+			this.subCategoryList = data.filter((x:any) =>  x.categoryId === this.categoryId);
+			console.log(this.categoryId);
+		  });
 	}
 
 	getProducts(){
+		this.subCategoryId ='';
 		setTimeout(()=>{
 			this.customerService.getSearchProduct(this.searchTerm, this.categoryId,this.page,this.pageSize,this.sortBy, this.sortOrder,this.subCategoryId).subscribe(result =>{
 				this.products = result;
-				console.log(this.products,'this.products')
+				this.getSubcategoriesByCategory(this.categoryId);
 			});
-		},500)
+		},500);
 	}
 
+	getsubCategoryProducts(){
+		setTimeout(()=>{
+			this.customerService.getSearchProduct(this.searchTerm, this.categoryId,this.page,this.pageSize,this.sortBy, this.sortOrder,this.subCategoryId).subscribe(result =>{
+				this.products = result;
+			});
+		},500);
+	}
+
+	getSubcategoriesByCategory(categoryId: string) {
+		this.customerService.getsubCategory().subscribe((result) => {
+			let data = result;
+			this.subCategoryList = data.filter((x:any) =>  x.categoryId === categoryId);
+			console.log(this.categoryId);
+		  });
+	  }
 	orderChange(event:any){
 		this.sortBy = 'price';
 		this.sortOrder =  event;

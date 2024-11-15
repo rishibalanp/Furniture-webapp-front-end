@@ -1,10 +1,10 @@
-$primary-color: #00bdc4;
-$secondary-color: #009689;
+$primary-color: #531800;
+$secondary-color: #b0784c;
 .background {
     position: relative;
     width: 100%;
     height: 100vh;
-    background: url('./../../../../assets/css/plugins/furniture3.jpg') no-repeat center center/cover;
+    background: url('./../../../assets/home.png') no-repeat center center/cover;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -93,3 +93,85 @@ $secondary-color: #009689;
     color: red;
     font-size: 0.75rem;
   }
+
+
+  @media (max-width: 768px) { /* Tablet and smaller screens */
+    .background {
+      background-size: cover;
+      background-position: center center;
+    }
+  
+    .form-container {
+      width: 90%;
+      padding: 15px;
+      margin-bottom: 5rem;
+      max-width: 350px;
+    }
+  
+    .form-box {
+      padding: 30px;
+    }
+  
+    h2 {
+      font-size: 22px;
+    }
+  
+    .input-box input {
+      font-size: 14px;
+      padding: 8px;
+    }
+  
+    .input-box label {
+      font-size: 14px;
+    }
+  
+    button {
+      font-size: 16px;
+      padding: 10px;
+    }
+  
+    .invalid-feedback {
+      font-size: 0.7rem;
+    }
+  }
+  
+  @media (max-width: 480px) { /* Mobile view */
+    .background {
+      background-size: cover;
+      background-position: center center;
+    }
+  
+    .form-container {
+      width: 90%;
+      padding: 12px;
+      margin-bottom: 3rem;
+      max-width: 320px;
+    }
+  
+    .form-box {
+      padding: 20px;
+    }
+  
+    h2 {
+      font-size: 18px;
+    }
+  
+    .input-box input {
+      font-size: 13px;
+      padding: 6px;
+    }
+  
+    .input-box label {
+      font-size: 13px;
+    }
+  
+    button {
+      font-size: 14px;
+      padding: 8px;
+    }
+  
+    .invalid-feedback {
+      font-size: 0.65rem;
+    }
+  }
+  

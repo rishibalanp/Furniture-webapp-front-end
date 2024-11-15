@@ -8,5 +8,13 @@ export interface Product{
     images: string[],
     categoryId:string,
     isFeatured: boolean,
-    isNewProduct:boolean
+    isNewProduct:boolean,
+    customizations: String,
+    productDimensions: String,
+    weight: Number,
+    material: String,
+    color: String,
+    care: String,
+    shape: String,
+    finishType: String,
 }

@@ -3,22 +3,17 @@ import { Router, RouterLink } from '@angular/router';
 import { CustomerService } from '../../services/customer.service';
 import { Product } from '../../types/product';
 import { ProductCardComponent } from '../product-card/product-card.component';
-import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { WishlistService } from '../../services/wishlist.service';
 import { CartService } from '../../services/cart.service';
 import { CommonModule } from '@angular/common';
 import { CategoryService } from '../../services/category.service';
 import { category } from '../../types/category';
 import { SubCategoryService } from '../../services/sub-category.service';
-import { subCategory } from '../../types/subcategory';
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
-    RouterLink,
     ProductCardComponent,
-    CarouselModule,
-    RouterLink,
     CommonModule,
   ],
   templateUrl: './home.component.html',
@@ -26,19 +21,6 @@ import { subCategory } from '../../types/subcategory';
 })
 export class HomeComponent implements OnInit {
   categoryService = inject(CategoryService);
-  customOptions: OwlOptions = {
-    loop: true,
-    mouseDrag: false,
-    touchDrag: false,
-    pullDrag: false,
-    dots: false,
-    autoplay: true,
-    autoplayTimeout: 3000,
-    navSpeed: 700,
-    navText: ['<', '>'],
-    nav: true,
-  };
-
   @HostListener('window:resize', [])
   onResize() {
     this.updateViewMode();
@@ -64,8 +46,51 @@ export class HomeComponent implements OnInit {
   featuredProducts: Product[] = [];
   bannerImages: Product[] = [];
 
+
+  images = [
+    'assets/carousel/c1.png',
+    'assets/carousel/c2.png',
+    'assets/carousel/c3.png',
+    'assets/carousel/c4.png',
+    'assets/carousel/c5.png',
+    'assets/carousel/c6.png',
+    'assets/carousel/c7.png',
+    'assets/carousel/c8.png',
+    'assets/carousel/c9.png',
+  ];
+  currentIndex = 0;
+  autoplayInterval: any;
+
+  ngOnDestroy(): void {
+    this.stopAutoplay();
+  }
+
+  startAutoplay(): void {
+    this.autoplayInterval = setInterval(() => {
+      this.nextSlide();
+    }, 3000); // Change slide every 3 seconds
+  }
+
+  stopAutoplay(): void {
+    if (this.autoplayInterval) {
+      clearInterval(this.autoplayInterval);
+    }
+  }
+
+  nextSlide(): void {
+    this.currentIndex = (this.currentIndex + 1) % this.images.length;
+  }
+
+  prevSlide(): void {
+    this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
+  }
+
+  goToSlide(index: number): void {
+    this.currentIndex = index;
+  }
   ngOnInit(): void {
-    this.customerService.getCategory().subscribe((result) => {
+    this.startAutoplay();
+    this.customerService.getCategory().subscribe((result:any) => {
       this.categoryList = result;
     });
 

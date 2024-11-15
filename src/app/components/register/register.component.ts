@@ -6,13 +6,13 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import Swal from 'sweetalert2';
 import { TYPE } from './../../types/alert';
-import { Router } from '@angular/router';
+import { Router,RouterLink } from '@angular/router';
 
 
 @Component({
 	selector: 'app-register',
 	standalone: true,
-	imports: [MatButtonModule,ReactiveFormsModule,CommonModule ],
+	imports: [MatButtonModule,ReactiveFormsModule,CommonModule,RouterLink],
 	templateUrl: './register.component.html',
 	styleUrl: './register.component.scss'
 })

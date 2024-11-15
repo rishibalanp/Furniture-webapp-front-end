@@ -1,43 +1,80 @@
-<div class="flex px-10 py-2 product-list">
-    <div class="w-2/12 filter">
-        <div class="filter-header">
-            <h5>Filters</h5>
-        </div>
-        <hr>
-
-        <div >
-            <mat-form-field class="w-full p-2">
-                <mat-label>Select Category</mat-label>
-                <mat-select name="categoryId" [(ngModel)]="categoryId" (valueChange)="getProducts()">
-                    @for(categories of category; track $index){
-                        <mat-option [value]="categories._id">{{categories.name}}</mat-option>
-                    }
-                </mat-select>
-              </mat-form-field>
-        </div>
-
+<div class="flex flex-col md:flex-row gap-4 px-4 py-2">
+    <!-- Filter Section -->
+    <div class="w-full md:w-2/12 bg-white shadow-md p-4 rounded-md">
+      <h5 class="text-lg md:text-xl font-medium capitalize">Filters</h5>
+      <hr class="mb-4" />
+  
+      <!-- Category Select -->
+      <mat-form-field class="w-full mb-4">
+        <mat-label>Select Category</mat-label>
+        <mat-select name="categoryId" [(ngModel)]="categoryId" (valueChange)="getProducts()">
+          @for (category of category; track $index) {
+            <mat-option [value]="category._id">
+              {{ category.name }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+  
+      <!-- Subcategory Select -->
+      <mat-form-field class="w-full">
+        <mat-label>Select Subcategory</mat-label>
+        <mat-select name="subCategoryId" [(ngModel)]="subCategoryId" (valueChange)="getsubCategoryProducts()">
+          @for (subcategory of subCategoryList; track $index) {
+            <mat-option [value]="subcategory._id">
+              {{ subcategory.name }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
     </div>
-    <div class="flex-1 product">
-        <div class="flex justify-end">
-            <mat-form-field class="w-40">
-                <mat-label>Sort by price:</mat-label>
-                <mat-select (valueChange)="orderChange($event)">
-                        <mat-option [value]="1">Low to High</mat-option>
-                        <mat-option [value]="-1">High to Low</mat-option>
-                </mat-select>
-              </mat-form-field>
-        </div>
-       
-         <div class="w-full">
-            @for(product of products; track $index){
-                <app-product-card-list [product]="product"></app-product-card-list>
-            }@empty {
-                <h5 class="no-products">No products</h5>
-            }
-        </div>
-        <div class="flex justify-center m-4">
-            <button mat-raised-button class="m-2" [disabled]="page==1" (click)="pageChange(page-1)">Previous</button>
-            <button mat-raised-button class="m-2" (click)="pageChange(page+1)">Next</button>
-        </div>
+  
+    <!-- Products Section -->
+    <div class="flex-1">
+      <!-- Sort by Price -->
+      <div class="flex justify-end mb-4">
+        <mat-form-field class="w-40">
+          <mat-label>Sort by price</mat-label>
+          <mat-select (valueChange)="orderChange($event)">
+            <mat-option [value]="1">Low to High</mat-option>
+            <mat-option [value]="-1">High to Low</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+  
+      <!-- Product Cards Grid -->
+      <div class="product-list grid grid-cols-1 md:grid-cols-2 gap-4">
+        @for (product of products; track $index) {
+          <app-product-card-list [product]="product"></app-product-card-list>
+        } @empty {
+          <h5 class="flex justify-center items-center h-60 text-base md:text-2xl font-bold text-gray-700">
+            No products
+          </h5>
+        }
+      </div>
+  
+      <!-- Pagination -->
+
+      @if(products.length > 10){
+        <div class="flex justify-center mt-6">
+            <button
+              mat-raised-button
+              class="px-3 py-2 bg-blue-500 text-sm md:text-base text-white rounded-md hover:bg-blue-600 m-2"
+              [disabled]="page == 1"
+              (click)="pageChange(page - 1)"
+            >
+              Previous
+            </button>
+            <button
+              mat-raised-button
+              class="px-3 py-2 bg-blue-500 text-sm md:text-base text-white rounded-md hover:bg-blue-600 m-2"
+              (click)="pageChange(page + 1)"
+            >
+              Next
+            </button>
+          </div>
+      }
+     
     </div>
-</div>
+  </div>
+  
