@@ -1,1 +1,63 @@
-<p>profile works!</p>
+<div class="bg-gray-100 min-h-screen p-6">
+    <div class="max-w-4xl mx-auto bg-white shadow-md rounded-lg overflow-hidden">
+      <!-- Header Section -->
+      <div class="flex items-center bg-secondary p-6">
+        <div class="w-20 h-20 bg-secondary rounded-full border-4 border-white overflow-hidden">
+          <img
+            src="https://via.placeholder.com/150"
+            alt="Profile Picture"
+            class="object-cover w-full h-full"
+          />
+        </div>
+        <div class="ml-6">
+          <h2 class="text-2xl font-bold text-primary">{{userData?.name}}</h2>
+        </div>
+      </div>
+  
+      <!-- Profile Information -->
+      <div class="p-6 space-y-4">
+        <!-- Contact Information -->
+        <div>
+          <h3 class="text-lg font-semibold text-primary mb-2">Contact Information</h3>
+          <div class="text-gray-700 space-y-1">
+            <p class="text-secondary"><span class="font-medium mx-2 text-primary">Email:</span>{{userData?.email}}</p>
+            <!-- <p class="text-secondary"><span class="font-medium mx-2 text-primary">Phone:</span>{{userData?.phonenumber || 'NA'}} </p> -->
+            @if (addresses.length > 0) {
+                @for (address of addresses; track $index) {
+                  <div class="bg-white p-4 rounded-lg shadow mb-4">
+                    <p class="text-lg text-secondary">
+                      {{ address?.street1 }}, {{ address.street2 }},{{ address.city }}, {{ address.state }}
+                    </p>
+                    <p
+                      *ngIf="address.primaryAddress"
+                      class="text-sm text-green-600 font-semibold"
+                    >
+                      Shipping Address
+                    </p>
+                    <div class="flex justify-end space-x-4 mt-4">
+                      <button *ngIf="!address.primaryAddress"
+                        class="text-green-600 hover:text-secondary"
+                        (click)="makeprimary(address)"
+                      >
+                        Choose address
+                      </button>
+                      <button
+                        class="text-red-500 hover:text-secondary"
+                        (click)="deleteAddress(address._id!)"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                }
+              } @else{
+                <p class="text-secondary">No addresses found</p>
+              }
+              
+              
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

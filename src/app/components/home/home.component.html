@@ -30,7 +30,7 @@
         class="categoryImage cursor-pointer mx-auto h-5 md:h-20"
         alt="{{ category.name }}"
       />
-      <div class="font-medium text-xs sm:text-sm md:text-base mt-2 mb-2 cursor-pointer" (click)="searchCategory(category._id)">
+      <div class="font-medium text-xs sm:text-sm md:text-base mt-2 mb-2 cursor-pointer text-primary" (click)="searchCategory(category._id)">
         {{ category.name }}
       </div>
 
@@ -42,7 +42,7 @@
       >
         <div
           *ngFor="let subcategory of getSubcategoriesByCategory(category._id)"
-          class="subcategory-item py-1 px-2"
+          class="subcategory-item py-1 px-2 text-secondary"
           (click)="searchSubCategory(subcategory._id)"
         >
           {{ subcategory.name }}

@@ -48,6 +48,7 @@ export class AddresspageComponent implements OnInit {
     city: ['', Validators.required],
     state: ['', Validators.required],
     pincode: ['', Validators.required],
+    phoneNumber:[,Validators.required],
     primaryAddress: [false],
   });
 

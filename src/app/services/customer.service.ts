@@ -76,4 +76,8 @@ updateAddress(addressId:string,address:any){
 deleteAddress(addressId:string){
 	return this.http.delete(environment.apiUrl + '/customer/removeaddress/' + addressId);
 }
+
+userDetails(){
+	return this.http.get(environment.apiUrl+'/customer/userdetails');
+}
 }
