@@ -1,13 +1,14 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { Product } from '../../types/product';
-
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import { CustomerService } from '../../services/customer.service';
 import { Address } from '../../types/addresss';
+
+declare var Razorpay: any;
 
 @Component({
   selector: 'app-cart',
@@ -64,7 +65,38 @@ export class CartComponent implements OnInit {
   }
 
   checkOut() {
-    this.router.navigateByUrl('/checkout');
+    const RozarpayOptions = {
+      description: 'Sample Razorpay demo',
+      currency: 'INR',
+      amount: 100000,
+      name: 'Sai',
+      key: 'rzp_test_ykpIQCXJbWgyQi',
+      image: 'https://i.imgur.com/FApqk3D.jpeg',
+      prefill: {
+        name: 'Rishi',
+        email: 'rishibalanp@gmail.com',
+        phone: '8124544534'
+      },
+      theme: {
+        color: '#531800'
+      },
+      modal: {
+        ondismiss:  () => {
+          console.log('dismissed')
+        }
+      }
+    }
+
+    const successCallback = (paymentid: any) => {
+      console.log(paymentid);
+    }
+
+    const failureCallback = (e: any) => {
+      console.log(e);
+    }
+
+    Razorpay.open(RozarpayOptions,successCallback, failureCallback)
+  
   }
 
   goToAddressPage(){
