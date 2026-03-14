@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CustomerService } from '../../services/customer.service';
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2/dist/sweetalert2.esm.all.js';
 import { TYPE } from '../../types/alert';
 import { Address } from '../../types/addresss';
 @Component({

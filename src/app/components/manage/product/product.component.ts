@@ -14,7 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { ProductService } from '../../../services/product.service';
 import { Product } from '../../../types/product';
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2/dist/sweetalert2.esm.all.js';
 import { TYPE } from './../../../types/alert';
 
 @Component({

@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { CustomerService } from '../../services/customer.service';
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2/dist/sweetalert2.esm.all.js';
 import { TYPE } from '../../types/alert';
 import { Address } from '../../types/addresss';
 import { Router } from '@angular/router';

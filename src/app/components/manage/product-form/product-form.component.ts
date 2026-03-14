@@ -8,7 +8,7 @@ import { CategoryService } from '../../../services/category.service';
 import { ProductService } from '../../../services/product.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2/dist/sweetalert2.esm.all.js';
 import { TYPE } from './../../../types/alert';
 import { subCategory } from '../../../types/subcategory';
 import { SubCategoryService } from '../../../services/sub-category.service';

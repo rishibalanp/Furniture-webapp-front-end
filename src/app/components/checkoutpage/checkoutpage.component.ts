@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { OrderService } from '../../services/order.service';
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2/dist/sweetalert2.esm.all.js';
 import { TYPE } from '../../types/alert';
 import { Order } from '../../types/order';
 import { CartService } from '../../services/cart.service';

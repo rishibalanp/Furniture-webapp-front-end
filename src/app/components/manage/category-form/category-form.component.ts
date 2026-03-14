@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { CategoryService } from '../../../services/category.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2/dist/sweetalert2.esm.all.js';
 import { TYPE } from './../../../types/alert';
 
 @Component({

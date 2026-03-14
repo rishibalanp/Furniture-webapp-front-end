@@ -3,7 +3,7 @@ import { AuthService } from '../../services/auth.service';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2/dist/sweetalert2.esm.all.js';
 import { TYPE } from './../../types/alert';
 import { Router,RouterLink } from '@angular/router';
 @Component({

@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import Validation from './Validation';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2/dist/sweetalert2.esm.all.js';
 import { TYPE } from './../../types/alert';
 import { Router,RouterLink } from '@angular/router';
 
