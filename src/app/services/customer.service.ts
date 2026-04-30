@@ -17,6 +17,8 @@ export class CustomerService {
 
 getNewProduct(){
 			return this.http.get<Product[]>(environment.apiUrl+'/customer/new-products')
+			return this.http.get<Product[]>("http://localhost:3000"+'/customer/new-products')
+			return this.http.get<Product[]>("https://furniture-webapp-back-end.onrender.com"+'/customer/new-products')
 }
 
 getFeaturedProducts(){
