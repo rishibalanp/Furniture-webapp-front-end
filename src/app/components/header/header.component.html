@@ -19,6 +19,7 @@
     <div
       class="flex-grow max-w-xl mx-4 border border-black-700 text-primary"
       [ngClass]="{ hidden: isMobile, 'md:flex': true }"
+      *ngIf="authService.isLoggedIn"
     >
       <input
         type="text"
