@@ -1,11 +1,15 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, DestroyRef, inject, Input } from '@angular/core';
 import { Product } from '../../types/product';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { WishlistService } from '../../services/wishlist.service';
-import { CartService } from '../../services/cart.service';
 import { CommonModule } from '@angular/common';
+import { Store } from '@ngrx/store';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CartActions } from '../../store/cart/cart.actions';
+import { selectCartProductIds } from '../../store/cart/cart.selectors';
+import { WishlistActions } from '../../store/wishlist/wishlist.actions';
+import { selectWishlistProductIds } from '../../store/wishlist/wishlist.selectors';
 
 @Component({
   selector: 'app-product-card',
@@ -15,9 +19,29 @@ import { CommonModule } from '@angular/common';
   styleUrl: './product-card.component.scss',
 })
 export class ProductCardComponent {
-  wishlistService = inject(WishlistService);
-  cartService = inject(CartService);
+  private destroyRef = inject(DestroyRef);
+  private store = inject(Store);
+  private cartProductIds = new Set<string>();
+  private wishlistProductIds = new Set<string>();
+
   @Input() product!: Product;
+
+  constructor() {
+    this.store
+      .select(selectCartProductIds)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((ids) => {
+        this.cartProductIds = new Set(ids);
+      });
+
+    this.store
+      .select(selectWishlistProductIds)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((ids) => {
+        this.wishlistProductIds = new Set(ids);
+      });
+  }
+
   get sellingPrice() {
     return Math.floor(
       this.product.price - (this.product.price * this.product.discount) / 100,
@@ -25,39 +49,24 @@ export class ProductCardComponent {
   }
   addWishlist(product: Product) {
     if (this.inWishlist(product)) {
-      this.wishlistService.removeWishlist(product._id!).subscribe((result) => {
-        this.wishlistService.init();
-      });
+      this.store.dispatch(WishlistActions.removeWishlist({ productId: product._id! }));
     } else {
-      this.wishlistService.addWishlist(product._id!).subscribe((result) => {
-        this.wishlistService.init();
-      });
+      this.store.dispatch(WishlistActions.addWishlist({ productId: product._id! }));
     }
   }
 
   inWishlist(product: Product) {
-    let isWishlistAvailable = this.wishlistService.wishlist.find(
-      (x) => x?._id === product._id,
-    );
-    return isWishlistAvailable ? true : false;
+    return Boolean(product._id && this.wishlistProductIds.has(product._id));
   }
 
   addToCart(product: Product) {
     if (!this.inCart(product._id!)) {
-      this.cartService.addToCart(product._id!, 1).subscribe(() => {
-        this.cartService.init();
-      });
+      this.store.dispatch(CartActions.addToCart({ productId: product._id!, quantity: 1 }));
     } else {
-      this.cartService.removeFromCart(product._id!).subscribe(() => {
-        this.cartService.init();
-      });
+      this.store.dispatch(CartActions.removeFromCart({ productId: product._id! }));
     }
   }
   inCart(productId: string) {
-    if (this.cartService.cartItems.find((x) => x.product?._id == productId)) {
-      return true;
-    } else {
-      return false;
-    }
+    return this.cartProductIds.has(productId);
   }
 }

@@ -8,14 +8,7 @@ import { CartItem } from '../types/cart';
 })
 export class CartService {
 	http=inject(HttpClient)
-  cartItems:CartItem[]=[];  
   constructor() { }
-
-  init(){
-    this.getCartItems().subscribe(result =>{
-      this.cartItems = result;
-    })
-  }
 
   getCartItems(){
     return this.http.get<CartItem[]>(environment.apiUrl+'/customer/carts' );

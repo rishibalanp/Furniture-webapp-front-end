@@ -1,5 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { CartService } from '../../services/cart.service';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { Product } from '../../types/product';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -7,6 +6,11 @@ import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import { CustomerService } from '../../services/customer.service';
 import { Address } from '../../types/addresss';
+import { Store } from '@ngrx/store';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CartItem } from '../../types/cart';
+import { CartActions } from '../../store/cart/cart.actions';
+import { selectCartItems, selectCartTotalAmount } from '../../store/cart/cart.selectors';
 
 declare var Razorpay: any;
 
@@ -22,13 +26,33 @@ declare var Razorpay: any;
   styleUrl: './cart.component.scss',
 })
 export class CartComponent implements OnInit {
-  cartService = inject(CartService);
+  private destroyRef = inject(DestroyRef);
+  private store = inject(Store);
   customerService = inject(CustomerService);
+  cartItems: CartItem[] = [];
+  totalAmount = 0;
   userAddress: Address[] = [];
   router = inject(Router);
   primaryAddress: Address | null = null; 
+
+  constructor() {
+    this.store
+      .select(selectCartItems)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((items) => {
+        this.cartItems = items;       
+      });
+
+    this.store
+      .select(selectCartTotalAmount)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((totalAmount) => {
+        this.totalAmount = totalAmount;
+      });
+  }
+
   ngOnInit() {
-    this.cartService.init();
+    this.store.dispatch(CartActions.loadCart());
     this.customerService
     .getAddress()
     .subscribe((result: { addresses: Address[] }) => {
@@ -36,32 +60,17 @@ export class CartComponent implements OnInit {
       this.primaryAddress = this.userAddress.find(address => address.primaryAddress) || null;
     });
   }
-  get cartItems() {
-    return this.cartService.cartItems;
-  }
 
   sellingPrice(product: Product) {
     return Math.round(product?.price - (product?.price * product?.discount) / 100);
   }
 
   addToCart(productId: string, quantity: number) {
-    this.cartService.addToCart(productId, quantity).subscribe(() => {
-      this.cartService.init();
-    });
+    this.store.dispatch(CartActions.addToCart({ productId, quantity }));
   }
 
-  get totalAmount() {
-    let totalAmounts = 0;
-    for (let index = 0; index < this.cartItems.length; index++) {
-      const element = this.cartItems[index];
-      totalAmounts += this.sellingPrice(element.product) * element.quantity;
-    }
-    return totalAmounts;
-  }
   removeCart(productId: string) {
-    this.cartService.removeFromCart(productId).subscribe(() => {
-      this.cartService.init();
-    });
+    this.store.dispatch(CartActions.removeFromCart({ productId }));
   }
 
   checkOut() {
@@ -102,9 +111,4 @@ export class CartComponent implements OnInit {
   goToAddressPage(){
     this.router.navigateByUrl('/address');
   }
-  
-
-
-
-
 }

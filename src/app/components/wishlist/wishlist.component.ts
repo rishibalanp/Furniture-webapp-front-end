@@ -1,7 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { WishlistService } from '../../services/wishlist.service';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { ProductCardComponent } from '../product-card/product-card.component';
 import { Product } from '../../types/product';
+import { Store } from '@ngrx/store';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { WishlistActions } from '../../store/wishlist/wishlist.actions';
+import { selectWishlistProducts } from '../../store/wishlist/wishlist.selectors';
 
 @Component({
   selector: 'app-wishlist',
@@ -12,9 +15,20 @@ import { Product } from '../../types/product';
 })
 export class WishlistComponent implements OnInit{
 
-  wishlistService = inject(WishlistService);
+  private destroyRef = inject(DestroyRef);
+  private store = inject(Store);
   wishlist:Product[]=[];
+
+  constructor() {
+    this.store
+      .select(selectWishlistProducts)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((products) => {
+        this.wishlist = products;
+      });
+  }
+
   ngOnInit(): void {
-    this.wishlistService.init();
+    this.store.dispatch(WishlistActions.loadWishlist());
   }
 }

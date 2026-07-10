@@ -3,8 +3,6 @@ import { Router, RouterLink } from '@angular/router';
 import { CustomerService } from '../../services/customer.service';
 import { Product } from '../../types/product';
 import { ProductCardComponent } from '../product-card/product-card.component';
-import { WishlistService } from '../../services/wishlist.service';
-import { CartService } from '../../services/cart.service';
 import { CommonModule } from '@angular/common';
 import { CategoryService } from '../../services/category.service';
 import { category } from '../../types/category';
@@ -37,8 +35,6 @@ export class HomeComponent implements OnInit {
 
   categoryList: category[] = [];
   subCategoryList: any;
-  wishlistService = inject(WishlistService);
-  cartService = inject(CartService);
   customerService = inject(CustomerService);
   subCategoryService = inject(SubCategoryService);
   router = inject(Router);

@@ -2,8 +2,9 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { WishlistService } from './services/wishlist.service';
-import { CartService } from './services/cart.service';
+import { Store } from '@ngrx/store';
+import { CartActions } from './store/cart/cart.actions';
+import { WishlistActions } from './store/wishlist/wishlist.actions';
 @Component({
 	selector: 'app-root',
 	standalone: true,
@@ -16,11 +17,10 @@ FooterComponent
 	styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit{
-wishlistService = inject(WishlistService);
-cartService = inject(CartService);
+store = inject(Store);
 	ngOnInit() {
-		this.wishlistService.init();
-		this.cartService.init();
+		this.store.dispatch(CartActions.loadCart());
+		this.store.dispatch(WishlistActions.loadWishlist());
 	}
 	title = 'furniture';
 }

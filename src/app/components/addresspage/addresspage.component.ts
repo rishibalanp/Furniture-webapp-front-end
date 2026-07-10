@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -15,7 +15,11 @@ import { TYPE } from '../../types/alert';
 import { Address } from '../../types/addresss';
 import { Router } from '@angular/router';
 import { Product } from '../../types/product';
-import { CartService } from '../../services/cart.service';
+import { Store } from '@ngrx/store';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CartItem } from '../../types/cart';
+import { CartActions } from '../../store/cart/cart.actions';
+import { selectCartItems, selectCartTotalAmount } from '../../store/cart/cart.selectors';
 
 @Component({
   selector: 'app-addresspage',
@@ -32,8 +36,11 @@ import { CartService } from '../../services/cart.service';
 })
 export class AddresspageComponent implements OnInit {
   submitted = false;
-  cartService = inject(CartService);
+  private destroyRef = inject(DestroyRef);
+  private store = inject(Store);
   customerService = inject(CustomerService);
+  cartItems: CartItem[] = [];
+  totalAmount = 0;
   userAddress: Address[] = [];
   router = inject(Router);
   primaryAddress: Address | null = null;
@@ -52,13 +59,29 @@ export class AddresspageComponent implements OnInit {
     primaryAddress: [false],
   });
 
+  constructor() {
+    this.store
+      .select(selectCartItems)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((items) => {
+        this.cartItems = items;
+      });
+
+    this.store
+      .select(selectCartTotalAmount)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((totalAmount) => {
+        this.totalAmount = totalAmount;
+      });
+  }
+
   get f(): { [key: string]: AbstractControl } {
     return this.addressForm.controls;
   }
 
   ngOnInit(): void {
     this.loadAddress();
-    this.cartService.init();
+    this.store.dispatch(CartActions.loadCart());
   }
 
   loadAddress() {
@@ -222,19 +245,6 @@ export class AddresspageComponent implements OnInit {
 
   sellingPrice(product: Product) {
     return Math.round(product.price - (product.price * product.discount) / 100);
-  }
-
-  get totalAmount() {
-    let totalAmounts = 0;
-    for (let index = 0; index < this.cartItems.length; index++) {
-      const element = this.cartItems[index];
-      totalAmounts += this.sellingPrice(element.product) * element.quantity;
-    }
-    return totalAmounts;
-  }
-
-  get cartItems() {
-    return this.cartService.cartItems;
   }
 
   addNewAddress() {
