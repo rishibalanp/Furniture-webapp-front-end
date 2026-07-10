@@ -51,7 +51,6 @@ getsubCategory(){
 }
 
 getSearchProduct(searchTerm: string,categoryId:string,page:Number,pageSize:number, sortBy:string,sortOrder:number,subCategoryId:string){
-	console.log(environment.apiUrl+`/customer/products?searchTerm=${searchTerm}&categoryId=${categoryId}&page=${page}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}`);
  return this.http.get<Product[]>(environment.apiUrl+`/customer/products?searchTerm=${searchTerm}&categoryId=${categoryId}&page=${page}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}&subCategoryId=${subCategoryId}`)
 }
 

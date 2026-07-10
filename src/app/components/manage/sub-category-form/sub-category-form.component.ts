@@ -38,7 +38,6 @@ export class SubCategoryFormComponent {
     if (this.id) {
       this.isEdit = true;
       this.subCategoryService.getCategorybyid(this.id).subscribe((res: any) => {
-        console.log(res);
         this.name = res.name;
         this.categoryId = res.categoryId;
       });

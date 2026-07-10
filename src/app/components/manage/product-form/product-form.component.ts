@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder,ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -12,6 +12,8 @@ import Swal from 'sweetalert2/dist/sweetalert2.esm.all.js';
 import { TYPE } from './../../../types/alert';
 import { subCategory } from '../../../types/subcategory';
 import { SubCategoryService } from '../../../services/sub-category.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { of, switchMap } from 'rxjs';
 
 @Component({
 	selector: 'app-product-form',
@@ -23,6 +25,7 @@ import { SubCategoryService } from '../../../services/sub-category.service';
 export class ProductFormComponent implements OnInit{
 
 formBuilder = inject(FormBuilder);
+private destroyRef = inject(DestroyRef);
 productForm = this.formBuilder.group({
 	name: [null,[Validators.required,Validators.minLength(4)] ],
 	price: [null,[Validators.required]],
@@ -55,23 +58,26 @@ isEdit = false;
 id!:string;
 
 ngOnInit(): void {
-	this.categoryService.getCategory().subscribe((categories) => {
+	this.categoryService.getCategory().pipe(takeUntilDestroyed(this.destroyRef)).subscribe((categories) => {
 		this.categories = categories; 
 	});
-	this.productForm.get('categoryId')?.valueChanges.subscribe((selectedCategoryId) => {
-		if (selectedCategoryId) {
-			this.subcategoryService.getCategorybyParentId(selectedCategoryId).subscribe((filteredSubCategories) => {
-				this.subCategory = filteredSubCategories;
-				console.log(this.subCategory,'testdsbjdjsd');
-				
-			});
-		} else {
-			this.subCategory = []; // Clear subcategories if no category is selected
-		}
-	});
+	this.productForm.get('categoryId')?.valueChanges
+		.pipe(
+			switchMap((selectedCategoryId) => {
+				if (!selectedCategoryId) {
+					return of([] as subCategory[]);
+				}
+
+				return this.subcategoryService.getCategorybyParentId(selectedCategoryId);
+			}),
+			takeUntilDestroyed(this.destroyRef),
+		)
+		.subscribe((filteredSubCategories) => {
+			this.subCategory = filteredSubCategories;
+		});
 	this.id = this.route.snapshot.params["id"];
 	if(this.id){
-		this.productService.getAllProductByID(this.id).subscribe(result =>{
+		this.productService.getAllProductByID(this.id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(result =>{
 			for (let index = 0; index < result.images.length; index++) {
 				this.addProductImage();
 			}
@@ -84,7 +90,6 @@ ngOnInit(): void {
 
 addProduct(){
 	let value = this.productForm.value;
-	console.log(this.productForm.value);
 	this.productService.addProduct(value as any).subscribe(result=>{
 		Swal.fire({
 			toast: true,

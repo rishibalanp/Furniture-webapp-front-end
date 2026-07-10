@@ -91,17 +91,14 @@ export class CartComponent implements OnInit {
       },
       modal: {
         ondismiss:  () => {
-          console.log('dismissed')
         }
       }
     }
 
     const successCallback = (paymentid: any) => {
-      console.log(paymentid);
     }
 
     const failureCallback = (e: any) => {
-      console.log(e);
     }
 
     Razorpay.open(RozarpayOptions,successCallback, failureCallback)

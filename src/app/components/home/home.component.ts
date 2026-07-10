@@ -1,12 +1,11 @@
-import { Component, HostListener, inject, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Component, DestroyRef, HostListener, inject, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CustomerService } from '../../services/customer.service';
 import { Product } from '../../types/product';
 import { ProductCardComponent } from '../product-card/product-card.component';
 import { CommonModule } from '@angular/common';
-import { CategoryService } from '../../services/category.service';
 import { category } from '../../types/category';
-import { SubCategoryService } from '../../services/sub-category.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -17,30 +16,26 @@ import { SubCategoryService } from '../../services/sub-category.service';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeComponent implements OnInit {
-  categoryService = inject(CategoryService);
+export class HomeComponent implements OnInit, OnDestroy {
+  private destroyRef = inject(DestroyRef);
   @HostListener('window:resize', [])
   onResize() {
     this.updateViewMode();
   }
 
   private updateViewMode() {
-    const desktop = window.innerWidth < 900;
-    if (desktop) {
-      this.loadCategoriesforMobileTablet();
-    } else {
-      this.loadCategoriesforDesktop();
-    }
+    this.applyProductLimit();
   }
 
   categoryList: category[] = [];
   subCategoryList: any;
   customerService = inject(CustomerService);
-  subCategoryService = inject(SubCategoryService);
   router = inject(Router);
   newProducts: Product[] = [];
   featuredProducts: Product[] = [];
   bannerImages: Product[] = [];
+  private allNewProducts: Product[] = [];
+  private allFeaturedProducts: Product[] = [];
 
 
   images = [
@@ -86,55 +81,28 @@ export class HomeComponent implements OnInit {
   }
   ngOnInit(): void {
     this.startAutoplay();
-    this.customerService.getCategory().subscribe((result:any) => {
+    this.customerService.getCategory().pipe(takeUntilDestroyed(this.destroyRef)).subscribe((result:any) => {
       this.categoryList = result;
     });
 
-    this.customerService.getsubCategory().subscribe((result) => {
+    this.customerService.getsubCategory().pipe(takeUntilDestroyed(this.destroyRef)).subscribe((result) => {
       this.subCategoryList = result;
     });
-    this.customerService.getNewProduct().subscribe((res) => {
-      this.newProducts = res.slice(0, 8);
-      console.log(res, 'new');
-      this.bannerImages.push(...res);
-      console.log(this.bannerImages, 'new');
+    this.customerService.getNewProduct().pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res) => {
+      this.allNewProducts = res;
+      this.applyProductLimit();
     });
-    this.customerService.getFeaturedProducts().subscribe((res) => {
-      this.featuredProducts = res.slice(0, 8);
-      console.log(res, 'fes');
-      this.bannerImages.push(...res);
-      console.log(this.bannerImages, 'new');
+    this.customerService.getFeaturedProducts().pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res) => {
+      this.allFeaturedProducts = res;
+      this.applyProductLimit();
     });
   }
 
-  loadCategoriesforDesktop() {
-    this.customerService.getNewProduct().subscribe((res) => {
-      this.newProducts = res.slice(0, 8);
-      console.log(res, 'new');
-      this.bannerImages.push(...res);
-      console.log(this.bannerImages, 'new');
-    });
-    this.customerService.getFeaturedProducts().subscribe((res) => {
-      this.featuredProducts = res.slice(0, 8);
-      console.log(res, 'fes');
-      this.bannerImages.push(...res);
-      console.log(this.bannerImages, 'new');
-    });
-  }
-
-  loadCategoriesforMobileTablet(){
-    this.customerService.getNewProduct().subscribe((res) => {
-      this.newProducts = res.slice(0, 6);
-      console.log(res, 'new');
-      this.bannerImages.push(...res);
-      console.log(this.bannerImages, 'new');
-    });
-    this.customerService.getFeaturedProducts().subscribe((res) => {
-      this.featuredProducts = res.slice(0, 6);
-      console.log(res, 'fes');
-      this.bannerImages.push(...res);
-      console.log(this.bannerImages, 'new');
-    });
+  private applyProductLimit() {
+    const productLimit = window.innerWidth < 900 ? 6 : 8;
+    this.newProducts = this.allNewProducts.slice(0, productLimit);
+    this.featuredProducts = this.allFeaturedProducts.slice(0, productLimit);
+    this.bannerImages = [...this.newProducts, ...this.featuredProducts];
   }
 
   searchCategory(id: string) {
@@ -146,7 +114,6 @@ export class HomeComponent implements OnInit {
 
   visibleCategory: string | null = null;
   getSubcategoriesByCategory(categoryId: string) {
-    console.log(this.subCategoryList);
     return this.subCategoryList.filter(
       (subcategory: { categoryId: string }) =>
         subcategory.categoryId === categoryId,

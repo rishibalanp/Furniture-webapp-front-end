@@ -234,7 +234,6 @@ export class AddresspageComponent implements OnInit {
 
   deleteAddress(addressId: string) {
     this.customerService.deleteAddress(addressId).subscribe((result: any) => {
-      console.log(result);
       this.loadAddress();
     });
   }

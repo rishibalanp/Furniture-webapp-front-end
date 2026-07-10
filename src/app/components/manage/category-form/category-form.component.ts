@@ -27,7 +27,6 @@ export class CategoryFormComponent implements OnInit {
     if (this.id) {
       this.isEdit = true;
       this.categoryService.getCategorybyid(this.id).subscribe((res: any) => {
-        console.log(res);
         this.name = res.name;
 		this.iconUrl = res.iconUrl;
       });

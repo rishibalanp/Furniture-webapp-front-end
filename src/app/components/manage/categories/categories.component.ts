@@ -38,7 +38,6 @@ export class CategoriesComponent implements AfterViewInit,OnInit{
 
 	private getAllCategory() {
 		this.categoryService.getCategory().subscribe((result) => {
-			console.log(result);
 			this.dataSource.data = result;
 		});
 	}

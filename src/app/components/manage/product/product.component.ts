@@ -57,7 +57,6 @@ export class ProductComponent {
 
   private getAllProduct() {
     this.productService.getAllProduct().subscribe((result) => {
-      console.log(result);
       this.dataSource.data = result;
     });
   }

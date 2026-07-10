@@ -24,7 +24,6 @@ export class ProfileComponent implements OnInit {
     this.customerService.userDetails().subscribe(result =>{
       this.userData = result;
       this.addresses = this.userData.addresses;
-      console.log(this.userData,'test');
     });
   }
 

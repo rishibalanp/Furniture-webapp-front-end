@@ -48,18 +48,18 @@ export class ProductDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe((x: any) => {
+    this.route.params.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((x: any) => {
       this.getProductDetails(x.id);
     });
   }
 
   getProductDetails(id: string) {
-    this.customerService.getProductById(id).subscribe((result) => {
+    this.customerService.getProductById(id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((result) => {
       this.product = result;
-      console.log(result,'productdetailpage');
       this.mainImage = this.product.images[0];
       this.customerService
         .getSearchProduct('', this.product.categoryId, 1, 4, '', -1,'')
+        .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((result) => {
           this.similarProducts = result;
         });
